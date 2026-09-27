@@ -1,0 +1,63 @@
+name: Sync Upstream
+
+on:
+  schedule:
+    - cron: '30 2 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: sync-upstream
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: localApps
+          fetch-depth: 0
+
+      - name: Merge upstream localApps
+        run: |
+          git config user.name "sync-bot"
+          git config user.email "actions@github.com"
+          git remote add upstream https://github.com/okxlin/appstore.git
+          git fetch upstream localApps
+          BASE="$(git merge-base HEAD upstream/localApps)"
+          if [ "$(git rev-parse HEAD)" = "${BASE}" ]; then
+            echo "no_updates=true" >> "$GITHUB_ENV"
+            echo "上游无更新。"
+            exit 0
+          fi
+          if ! git merge --no-edit upstream/localApps; then
+            echo "::error::合并冲突,请在本仓库执行 scripts/sync-upstream.sh 手动解决"
+            exit 1
+          fi
+          echo "新增提交数: $(git rev-list --count "${BASE}..HEAD")"
+
+      - name: Push
+        if: env.no_updates != 'true'
+        run: git push origin localApps
+
+      # 上游的 renovate 定时工作流随镜像带入了本仓库,对镜像仓库无意义且可能产生
+      # 失败通知,统一禁用(本工作流除外)。上游新增的定时工作流也会在每次同步后被禁用。
+      - name: Disable foreign workflows
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/${GITHUB_REPOSITORY}/actions/workflows?per_page=100" --paginate \
+            | jq -r '.workflows[] | select(.name != "Sync Upstream") | .id' \
+            | sort -u \
+            | while read -r id; do
+                [ -z "$id" ] && continue
+                echo "禁用工作流 #$id"
+                gh api -X PUT "repos/${GITHUB_REPOSITORY}/actions/workflows/${id}/disable" || true
+              done
+          echo "done"
