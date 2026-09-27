@@ -56,9 +56,37 @@ scripts/new-app.sh x-myapp 1.0.0 nginx:latest 80 40099
 ### 应用编写要点(1Panel v2 规范)
 
 - **应用级 `data.yml`**:`additionalProperties.key` 必须等于目录名;`type` 取 `website/tool/db/media/...`;`architectures` 填镜像实际支持的架构。
-- **版本级 `data.yml`**:`formFields` 中每个 `envKey` 都要出现在 `docker-compose.yml` 或 `.env.sample` 中;端口字段用 `rule: paramPort`、`type: number`。
+- **版本级 `data.yml`**:`formFields` 中每个 `envKey` 都要出现在 `docker-compose.yml` 或 `.env.sample` 中;端口字段用 `rule: paramPort`、`type: number`;下拉框用 `type: select` + `values: [{label, value}]`。
 - **`docker-compose.yml`**:固定使用外部网络 `1panel-network`、`container_name: ${CONTAINER_NAME}`、打上 `labels: { createdBy: "Apps" }`。
 - 提交前可用上游推荐的工具 [okxlin/1panel-app-adapter](https://github.com/okxlin/1panel-app-adapter) 校验。
+
+### ⚠️ 踩坑记录:compose 禁用旧式资源键(必读)
+
+**任何服务都不得使用 `mem_limit` / `memswap_limit` / `pids_limit`(及旧式 `cpus`)。**
+
+1Panel v2 安装应用时会向 compose 中的某个服务注入 `deploy.resources.limits`(`cpus: ${CPUS}`、`memory: ${MEMORY_LIMIT}`,对应安装面板「高级设置 → 资源限制」)。关键在于它选取注入目标的代码是对服务 map 的遍历**没有 break**(v2.0.11 `agent/app/service/app.go` create 流程),而 Go map 遍历顺序随机——**多服务应用中每个服务都可能成为注入目标**。注入目标上若存在旧式资源键,docker compose 校验直接失败:
+
+```
+services.<name>: can't set distinct values on 'mem_limit' and 'deploy.resources.limits.memory': invalid compose project
+```
+
+正确做法:
+
+- 内存/CPU 限制交给安装面板「高级设置 → 资源限制」配置(在应用 README 中给出建议值);
+- 与注入不冲突、可放心使用的加固:`read_only`、`tmpfs`、`cap_drop`、`security_opt: [no-new-privileges:true]`、`healthcheck`、`depends_on`;
+- 多服务应用的主服务用 `container_name: ${CONTAINER_NAME}`,sidecar 用应用前缀的服务名(如 `crw-searxng`),sidecar 不发布宿主端口。
+
+**发布前验证方法**(穷举注入目标,防止随机性漏测):
+
+```bash
+# 对 compose 中每个服务分别注入 deploy.resources.limits + HOST_IP/CPUS/MEMORY_LIMIT,
+# 逐一执行 docker compose config,全部通过才算过(参考 x-crw 的修复验证流程)
+```
+
+其他已验证的经验:
+
+- crw 类基于 rust `config` crate 的应用:环境变量 `CRW_` 前缀 + `__` 嵌套分隔覆盖 TOML(如 `CRW_SEARCH__SEARXNG_URL` 覆盖 `[search].searxng_url`);`auth.api_keys` 支持逗号分隔字符串。
+- SearXNG 官方默认引擎集(Google/DuckDuckGo/Brave 等)在无法直连的网络(如中国大陆)会全部超时;自带的 `settings.yml` 需追加 `engines: [{name: bing, disabled: false}]` 保证有可用引擎。
 
 ### 命名约定
 
