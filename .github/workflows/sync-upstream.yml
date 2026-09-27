@@ -31,7 +31,8 @@ jobs:
           git remote add upstream https://github.com/okxlin/appstore.git
           git fetch upstream localApps
           BASE="$(git merge-base HEAD upstream/localApps)"
-          if [ "$(git rev-parse HEAD)" = "${BASE}" ]; then
+          TIP="$(git rev-parse upstream/localApps)"
+          if [ "${TIP}" = "${BASE}" ]; then
             echo "no_updates=true" >> "$GITHUB_ENV"
             echo "上游无更新。"
             exit 0
@@ -40,7 +41,7 @@ jobs:
             echo "::error::合并冲突,请在本仓库执行 scripts/sync-upstream.sh 手动解决"
             exit 1
           fi
-          echo "新增提交数: $(git rev-list --count "${BASE}..HEAD")"
+          echo "上游新增提交数: $(git rev-list --count "${BASE}..upstream/localApps")"
 
       - name: Push
         if: env.no_updates != 'true'

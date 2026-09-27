@@ -34,7 +34,8 @@ echo "拉取上游 ${UPSTREAM_REPO}:${BRANCH} ..."
 git fetch "${UPSTREAM_REMOTE}" "${BRANCH}"
 
 BASE="$(git merge-base HEAD "${UPSTREAM_REMOTE}/${BRANCH}")"
-if [ "$(git rev-parse HEAD)" = "${BASE}" ]; then
+TIP="$(git rev-parse "${UPSTREAM_REMOTE}/${BRANCH}")"
+if [ "${TIP}" = "${BASE}" ]; then
   echo "无上游更新。"
   exit 0
 fi
@@ -47,7 +48,7 @@ if ! git merge --no-edit "${UPSTREAM_REMOTE}/${BRANCH}"; then
   exit 1
 fi
 
-echo "同步完成:$(git log --oneline "${BASE}..HEAD" | wc -l | tr -d ' ') 个新提交。"
+echo "同步完成:上游新增 $(git rev-list --count "${BASE}..${UPSTREAM_REMOTE}/${BRANCH}") 个提交。"
 
 if [ "${PUSH}" = "1" ]; then
   git push origin "${BRANCH}"
