@@ -34,11 +34,12 @@ services:
       - ALL
     security_opt:
       - no-new-privileges:true
-    # 注意:不要在此服务上使用 mem_limit/memswap_limit/pids_limit 等旧式资源键。
-    # 1Panel 安装应用时会向主服务注入 deploy.resources.limits(cpus/memory),
-    # 与旧式资源键同时存在会导致 docker compose 校验失败,如:
+    # 注意:本应用所有服务均不得使用 mem_limit/memswap_limit/pids_limit 等旧式资源键。
+    # 1Panel 安装应用时会向某个服务注入 deploy.resources.limits(cpus/memory)——
+    # 由于其选取服务的 map 遍历顺序随机,任何服务都可能成为注入目标,
+    # 注入目标上同时存在旧式资源键会导致 docker compose 校验失败,如:
     #   can't set distinct values on 'mem_limit' and 'deploy.resources.limits.memory'
-    # 内存/CPU 限制请在安装面板「高级设置-资源限制」中配置,建议内存 ≥ 2G。
+    # 内存/CPU 限制请在安装面板「高级设置-资源限制」中配置。
     depends_on:
       crw-searxng:
         condition: service_healthy
@@ -66,9 +67,6 @@ services:
       - ALL
     security_opt:
       - no-new-privileges:true
-    mem_limit: 512m
-    memswap_limit: 512m
-    pids_limit: 256
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/healthz"]
       interval: 10s
@@ -98,8 +96,6 @@ services:
       - "--block-private-networks"
       - "--block-cidrs"
       - "0.0.0.0/8,10.0.0.0/8,127.0.0.0/8,169.254.0.0/16,172.16.0.0/12,192.168.0.0/16,100.64.0.0/10,224.0.0.0/4,240.0.0.0/4,192.0.0.0/24,192.0.2.0/24,198.18.0.0/15,198.51.100.0/24,203.0.113.0/24,fc00::/7,fe80::/10,fec0::/10,ff00::/8,::/96,64:ff9b:1::/48,2002::/16"
-    mem_limit: 1g
-    memswap_limit: 1g
     healthcheck:
       test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/127.0.0.1/9222"]
       interval: 30s

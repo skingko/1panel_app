@@ -54,5 +54,5 @@ MCP 端点:`http://<主机>:<端口>/mcp`(streamable HTTP),可直接填入支持
 ## 备注
 
 - 数据无持久化(服务无状态),升级不影响使用;升级镜像 tag 需修改 `docker-compose.yml` 中的版本号。
-- 服务已按上游建议加固:只读根文件系统、dropped 全部 capabilities、进程数限额;主服务内存限制请在安装面板「高级设置 → 资源限制」中配置(建议 ≥ 2G,sidecar 已内置限额)。
+- 服务已按上游建议部分加固:只读根文件系统、dropped 全部 capabilities、no-new-privileges;内存/CPU 限制请在安装面板「高级设置 → 资源限制」中配置(建议 ≥ 2G)。compose 中不使用 mem_limit 等旧式资源键——1Panel 安装时注入 deploy 资源段的目标服务是随机的,与旧式资源键共存会导致校验失败。
 - Firecrawl 兼容性见 [COMPATIBILITY-firecrawl.md](https://github.com/fastcrw/crw/blob/main/COMPATIBILITY-firecrawl.md)。
