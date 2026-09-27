@@ -34,9 +34,11 @@ services:
       - ALL
     security_opt:
       - no-new-privileges:true
-    mem_limit: 2g
-    memswap_limit: 2g
-    pids_limit: 512
+    # 注意:不要在此服务上使用 mem_limit/memswap_limit/pids_limit 等旧式资源键。
+    # 1Panel 安装应用时会向主服务注入 deploy.resources.limits(cpus/memory),
+    # 与旧式资源键同时存在会导致 docker compose 校验失败,如:
+    #   can't set distinct values on 'mem_limit' and 'deploy.resources.limits.memory'
+    # 内存/CPU 限制请在安装面板「高级设置-资源限制」中配置,建议内存 ≥ 2G。
     depends_on:
       crw-searxng:
         condition: service_healthy
