@@ -1,0 +1,175 @@
+additionalProperties:
+  formFields:
+    - default: 13000
+      edit: true
+      envKey: PANEL_APP_PORT_HTTP
+      labelEn: Port
+      labelZh: 端口
+      label:
+        en: 'Port'
+        zh: '端口'
+        zh-Hant: '埠'
+        ja: 'ポート'
+        ko: '포트'
+        ru: 'Порт'
+        ms: 'Port'
+        pt-br: 'Porta'
+      required: true
+      rule: paramPort
+      type: number
+
+    - default: true
+      edit: true
+      envKey: CRW_SEARCH__ENABLED
+      labelEn: Enable /v1/search API
+      labelZh: 启用搜索 API(/v1/search)
+      label:
+        en: 'Enable /v1/search API'
+        zh: '启用搜索 API(/v1/search)'
+        zh-Hant: '啟用搜尋 API(/v1/search)'
+        ja: '検索 API(/v1/search)を有効化'
+        ko: '검색 API(/v1/search) 활성화'
+        ru: 'Включить API поиска (/v1/search)'
+        ms: 'Aktifkan API carian (/v1/search)'
+        pt-br: 'Ativar API de busca (/v1/search)'
+      required: true
+      type: select
+      values:
+        - label: 启用
+          value: 'true'
+        - label: 停用
+          value: 'false'
+
+    - default: http://crw-searxng:8080
+      edit: true
+      envKey: CRW_SEARCH__SEARXNG_URL
+      labelEn: Search backend (SearXNG) URL
+      labelZh: 搜索后端(SearXNG)地址
+      label:
+        en: 'Search backend (SearXNG) URL'
+        zh: '搜索后端(SearXNG)地址'
+        zh-Hant: '搜尋後端(SearXNG)位址'
+        ja: '検索バックエンド(SearXNG)URL'
+        ko: '검색 백엔드(SearXNG) URL'
+        ru: 'Адрес поискового бэкенда (SearXNG)'
+        ms: 'URL backend carian (SearXNG)'
+        pt-br: 'URL do backend de busca (SearXNG)'
+      required: true
+      type: text
+
+    - default: ''
+      edit: true
+      envKey: SEARXNG_SECRET_KEY
+      labelEn: SearXNG secret key (openssl rand -hex 32)
+      labelZh: SearXNG 内部密钥(建议修改)
+      label:
+        en: 'SearXNG secret key (openssl rand -hex 32)'
+        zh: 'SearXNG 内部密钥(建议修改)'
+        zh-Hant: 'SearXNG 內部密鑰(建議修改)'
+        ja: 'SearXNG シークレットキー(変更推奨)'
+        ko: 'SearXNG 시크릿 키(변경 권장)'
+        ru: 'Секретный ключ SearXNG (рекомендуется изменить)'
+        ms: 'Kunci rahsia SearXNG (disyorkan diubah)'
+        pt-br: 'Chave secreta do SearXNG (recomendado alterar)'
+      required: false
+      type: text
+
+    - default: ''
+      edit: true
+      envKey: CRW_AUTH__API_KEYS
+      labelEn: API keys (comma-separated, empty = no auth)
+      labelZh: 服务 API 鉴权密钥(逗号分隔,留空则无需鉴权)
+      label:
+        en: 'API keys (comma-separated, empty = no auth)'
+        zh: '服务 API 鉴权密钥(逗号分隔,留空则无需鉴权)'
+        zh-Hant: '服務 API 鑑權密鑰(逗號分隔,留空則無需鑑權)'
+        ja: 'API キー(カンマ区切り、空欄で認証なし)'
+        ko: 'API 키(쉼표 구분, 비우면 인증 없음)'
+        ru: 'API-ключи (через запятую, пусто = без авторизации)'
+        ms: 'Kunci API (dipisah koma, kosong = tanpa auth)'
+        pt-br: 'Chaves de API (separadas por vírgula, vazio = sem auth)'
+      required: false
+      type: text
+
+    - default: ''
+      edit: true
+      envKey: CRW_EXTRACTION__LLM__PROVIDER
+      labelEn: LLM provider (empty = disable AI summary/answer)
+      labelZh: LLM 服务商(留空禁用 AI 摘要/答案生成)
+      label:
+        en: 'LLM provider (empty = disable AI summary/answer)'
+        zh: 'LLM 服务商(留空禁用 AI 摘要/答案生成)'
+        zh-Hant: 'LLM 服務商(留空停用 AI 摘要/答案生成)'
+        ja: 'LLM プロバイダー(空欄で AI 機能無効)'
+        ko: 'LLM 공급자(비우면 AI 기능 비활성화)'
+        ru: 'LLM-провайдер (пусто = отключить AI-функции)'
+        ms: 'Penyedia LLM (kosong = lumpuhkan fungsi AI)'
+        pt-br: 'Provedor LLM (vazio = desativar funções de IA)'
+      required: false
+      type: select
+      values:
+        - label: 禁用
+          value: ''
+        - label: OpenAI
+          value: openai
+        - label: Anthropic
+          value: anthropic
+        - label: DeepSeek
+          value: deepseek
+        - label: OpenAI 兼容(自定义 base_url)
+          value: openai-compatible
+        - label: Azure OpenAI
+          value: azure
+        - label: OpenAI Responses
+          value: openai-responses
+
+    - default: ''
+      edit: true
+      envKey: CRW_EXTRACTION__LLM__API_KEY
+      labelEn: LLM API key (required when provider is set)
+      labelZh: LLM API 密钥(选择服务商后必填)
+      label:
+        en: 'LLM API key (required when provider is set)'
+        zh: 'LLM API 密钥(选择服务商后必填)'
+        zh-Hant: 'LLM API 密鑰(選擇服務商後必填)'
+        ja: 'LLM API キー(プロバイダー設定時必須)'
+        ko: 'LLM API 키(공급자 설정 시 필수)'
+        ru: 'API-ключ LLM (обязателен при выбранном провайдере)'
+        ms: 'Kunci API LLM (wajib bila penyedia ditetapkan)'
+        pt-br: 'Chave de API do LLM (obrigatória com provedor)'
+      required: false
+      type: text
+
+    - default: ''
+      edit: true
+      envKey: CRW_EXTRACTION__LLM__MODEL
+      labelEn: LLM model (e.g. deepseek-chat, gpt-4o-mini)
+      labelZh: LLM 模型(如 deepseek-chat、gpt-4o-mini)
+      label:
+        en: 'LLM model (e.g. deepseek-chat, gpt-4o-mini)'
+        zh: 'LLM 模型(如 deepseek-chat、gpt-4o-mini)'
+        zh-Hant: 'LLM 模型(如 deepseek-chat、gpt-4o-mini)'
+        ja: 'LLM モデル(例:deepseek-chat、gpt-4o-mini)'
+        ko: 'LLM 모델(예: deepseek-chat, gpt-4o-mini)'
+        ru: 'Модель LLM (например, deepseek-chat, gpt-4o-mini)'
+        ms: 'Model LLM (cth. deepseek-chat, gpt-4o-mini)'
+        pt-br: 'Modelo LLM (ex.: deepseek-chat, gpt-4o-mini)'
+      required: false
+      type: text
+
+    - default: ''
+      edit: true
+      envKey: CRW_EXTRACTION__LLM__BASE_URL
+      labelEn: LLM base URL (DeepSeek/OpenAI-compatible only)
+      labelZh: LLM 接口地址(仅 DeepSeek/OpenAI 兼容需要)
+      label:
+        en: 'LLM base URL (DeepSeek/OpenAI-compatible only)'
+        zh: 'LLM 接口地址(仅 DeepSeek/OpenAI 兼容需要)'
+        zh-Hant: 'LLM 介面位址(僅 DeepSeek/OpenAI 相容需要)'
+        ja: 'LLM ベースURL(DeepSeek/OpenAI互換のみ)'
+        ko: 'LLM 베이스 URL(DeepSeek/OpenAI 호환 전용)'
+        ru: 'Базовый URL LLM (только для DeepSeek/OpenAI-совместимых)'
+        ms: 'URL asas LLM (DeepSeek/kompatibel-OpenAI sahaja)'
+        pt-br: 'URL base do LLM (apenas DeepSeek/compatível com OpenAI)'
+      required: false
+      type: text

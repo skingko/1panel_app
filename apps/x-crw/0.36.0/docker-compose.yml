@@ -1,0 +1,108 @@
+networks:
+  1panel-network:
+    external: true
+
+services:
+  crw:
+    image: ghcr.io/us/crw:0.36.0
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    networks:
+      - 1panel-network
+    ports:
+      - "${PANEL_APP_PORT_HTTP}:3000"
+    environment:
+      - RUST_LOG=info
+      # 使用镜像内置 config.docker.toml 作为基础配置,面板变量通过 CRW__ 环境变量覆盖
+      - CRW_CONFIG=config.docker
+      # /v1/search 搜索 API
+      - CRW_SEARCH__ENABLED=${CRW_SEARCH__ENABLED}
+      - CRW_SEARCH__SEARXNG_URL=${CRW_SEARCH__SEARXNG_URL}
+      # 服务鉴权:逗号分隔多个 key;留空则匿名访问
+      - CRW_AUTH__API_KEYS=${CRW_AUTH__API_KEYS}
+      # LLM 配置:驱动 summary / /v1/search answer 综合;Provider 留空则禁用 AI 功能
+      - CRW_EXTRACTION__LLM__PROVIDER=${CRW_EXTRACTION__LLM__PROVIDER}
+      - CRW_EXTRACTION__LLM__API_KEY=${CRW_EXTRACTION__LLM__API_KEY}
+      - CRW_EXTRACTION__LLM__MODEL=${CRW_EXTRACTION__LLM__MODEL}
+      - CRW_EXTRACTION__LLM__BASE_URL=${CRW_EXTRACTION__LLM__BASE_URL}
+      # 渲染 sidecar 服务名前缀,与下方服务定义对应
+      - CRW_RENDERER__LIGHTPANDA__WS_URL=ws://crw-lightpanda:9222/
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 2g
+    memswap_limit: 2g
+    pids_limit: 512
+    depends_on:
+      crw-searxng:
+        condition: service_healthy
+      crw-lightpanda:
+        condition: service_started
+    labels:
+      createdBy: "Apps"
+
+  # /v1/search 的元搜索后端(仅容器网络内可达,不发布端口)
+  crw-searxng:
+    image: searxng/searxng:2026.5.9-0cba32c15
+    restart: always
+    networks:
+      - 1panel-network
+    environment:
+      - SEARXNG_BASE_URL=http://crw-searxng:8080/
+      - SEARXNG_SECRET_KEY=${SEARXNG_SECRET_KEY}
+    volumes:
+      - ./searxng-settings.yml:/etc/searxng/settings.yml:ro
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m
+      - /var/cache/searxng:size=128m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 512m
+    memswap_limit: 512m
+    pids_limit: 256
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    labels:
+      createdBy: "Apps"
+
+  # 轻量 JS 渲染器(~64MB),处理静态 JS 站点;复杂 SPA 站点效果有限
+  crw-lightpanda:
+    image: lightpanda/browser:latest
+    restart: always
+    networks:
+      - 1panel-network
+    environment:
+      - LIGHTPANDA_DISABLE_TELEMETRY=true
+    command:
+      - "/bin/lightpanda"
+      - "serve"
+      - "--host"
+      - "0.0.0.0"
+      - "--port"
+      - "9222"
+      - "--log-level"
+      - "info"
+      - "--block-private-networks"
+      - "--block-cidrs"
+      - "0.0.0.0/8,10.0.0.0/8,127.0.0.0/8,169.254.0.0/16,172.16.0.0/12,192.168.0.0/16,100.64.0.0/10,224.0.0.0/4,240.0.0.0/4,192.0.0.0/24,192.0.2.0/24,198.18.0.0/15,198.51.100.0/24,203.0.113.0/24,fc00::/7,fe80::/10,fec0::/10,ff00::/8,::/96,64:ff9b:1::/48,2002::/16"
+    mem_limit: 1g
+    memswap_limit: 1g
+    healthcheck:
+      test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/127.0.0.1/9222"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    labels:
+      createdBy: "Apps"

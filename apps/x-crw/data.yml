@@ -1,0 +1,33 @@
+name: CRW
+tags:
+  - 工具
+  - AI
+title: 快速轻量的网页抓取 / 爬取 / 搜索 API(Firecrawl 替代)
+description: Rust 编写的自托管网页抓取、爬取与搜索 API,兼容 Firecrawl 接口,内置 SearXNG 搜索后端与 MCP 服务器
+additionalProperties:
+  key: x-crw
+  name: CRW
+  tags:
+    - Tool
+    - AI
+  shortDescZh: 快速轻量的网页抓取/爬取/搜索 API,Firecrawl 兼容
+  shortDescEn: Fast, lightweight web scraper, crawler & search API in Rust, Firecrawl-compatible
+  description:
+    en: Self-hosted web scraper, crawler & search API with MCP server for AI agents. Firecrawl/Tavily alternative in Rust, only ~6MB RAM. Bundles a SearXNG sidecar for /v1/search and a LightPanda JS renderer.
+    zh: 自托管网页抓取、爬取与搜索 API,自带 MCP 服务器供 AI Agent 调用。Rust 编写的 Firecrawl/Tavily 替代品,内存占用约 6MB,内置 SearXNG 搜索后端与 LightPanda JS 渲染器。
+    zh-Hant: 自架網頁擷取、爬取與搜尋 API,內建 MCP 伺服器供 AI Agent 呼叫。Rust 編寫的 Firecrawl/Tavily 替代品,記憶體約 6MB,內建 SearXNG 搜尋後端與 LightPanda JS 渲染器。
+    ja: AI エージェント向け MCP サーバー同梱のセルフホスト Web スクレイピング・クロール・検索 API。Rust 製の Firecrawl/Tavily 代替、メモリ約 6MB、SearXNG と LightPanda 内蔵。
+    ko: AI 에이전트용 MCP 서버를 포함한 셀프 호스팅 웹 스크래핑·크롤링·검색 API. Rust로 작성된 Firecrawl/Tavily 대안, 메모리 약 6MB, SearXNG 및 LightPanda 내장.
+    ru: Self-hosted API веб-скрейпинга, краулинга и поиска с MCP-сервером для AI-агентов. Альтернатива Firecrawl/Tavily на Rust, ~6 МБ RAM, встроенные SearXNG и LightPanda.
+    ms: API pengikisan, perayauan & carian web self-hosted dengan pelayan MCP untuk ejen AI. Alternatif Firecrawl/Tavily dalam Rust, ~6MB RAM, SearXNG & LightPanda terbina dalam.
+    pt-br: API self-hosted de web scraping, crawling e busca com servidor MCP para agentes de IA. Alternativa a Firecrawl/Tavily em Rust, ~6MB RAM, SearXNG e LightPanda embutidos.
+  type: tool
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://github.com/fastcrw/crw
+  github: https://github.com/fastcrw/crw
+  document: https://docs.fastcrw.com/
+  architectures:
+    - amd64
+    - arm64
