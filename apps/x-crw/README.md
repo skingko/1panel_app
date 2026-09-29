@@ -29,6 +29,21 @@ Rust 编写的自托管 **Firecrawl / Tavily 替代品**:网页抓取(`/v1/scrap
 
 LLM 用于 `formats:["summary"]` 摘要与 `/v1/search` 的 `answer` 答案综合;不配置不影响抓取与搜索本身。
 
+## 搜索引擎说明
+
+默认启用的网页引擎:SearXNG 官方默认集(Google/DuckDuckGo/Brave/Startpage/Wikipedia,可直连的网络自动生效)+ 针对国内网络追加的 **Bing、搜狗(sogou)、夸克(quark)、360 搜索、百度**。被墙/被反爬的引擎会自动挂起,不影响其余引擎出结果。
+
+- **百度**:对服务器 IP 强制弹验证码,经常处于自动停用状态,属该引擎常态,不要指望它稳定出结果
+- **Google 等**:网络可直连时自动参与聚合;若有 HTTP/SOCKS 代理,可让它们走代理——编辑安装目录下 `searxng-settings.yml`(挂载进容器的那个),追加:
+  ```yaml
+  outgoing:
+    proxies:
+      all://:
+        - http://<代理地址>:<端口>
+  ```
+  然后 `docker restart` 本应用的 searxng 容器生效
+- `/v1/search` 支持的请求参数:`query`、`limit`、`lang`、`tbs`(时间范围 h/d/w/m/y)、`sources`、`categories`;**不支持**按请求指定引擎,引擎集由上述服务端配置决定
+
 ## 使用示例
 
 ```bash

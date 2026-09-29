@@ -17,14 +17,36 @@ search:
     - html
     - json
 
-# 在默认设置基础上把 Bing 加入默认启用引擎集:
-# SearXNG 官方默认集(Google/DuckDuckGo/Brave/Startpage/Wikipedia 等)
-# 在无法直连这些站点的网络(如中国大陆)会全部超时导致 /v1/search
-# 返回 search_degraded;Bing 在此类网络通常仍可达。其余默认引擎保持
-# 不变,可达时仍会参与聚合。
+# 引擎策略:在默认设置基础上,把国内网络可达的引擎加入默认启用集。
+# SearXNG 官方默认集(Google/DuckDuckGo/Brave/Startpage 等)在无法直连
+# 这些站点的网络(如中国大陆)会全部超时导致 /v1/search 返回 search_degraded;
+# 实测(2026-09,国内机房网络)各引擎可用性:
+#   bing 10 条 ✓ / sogou 9 条 ✓ / quark 9 条 ✓ / 360search 7 条 ✓
+#   baidu 0 条 ✗(对服务器 IP 强制验证码,触发后自动停用 1 小时,属该引擎常态)
+#   google 0 条 ✗(网络不可达;可直连的网络下正常参与聚合)
+# 被屏蔽的引擎保持启用不影响可用引擎——SearXNG 会自动挂起失败引擎。
 engines:
   - name: bing
     disabled: false
+  - name: baidu
+    disabled: false
+  - name: 360search
+    disabled: false
+  - name: sogou
+    disabled: false
+  - name: quark
+    disabled: false
+
+# 出站请求硬上限:SearXNG 的单次搜索预算 = 所有参与引擎中最大的单个超时
+# (部分默认引擎自带 20s),被墙引擎冷启动时单次查询要等满 20s,超过 crw 的
+# search.timeout_ms(15s)导致 /v1/search 报 search_degraded。
+# max_request_timeout 是全局闸门:actual_timeout = min(各引擎最大超时, 本值)。
+# 实测可用引擎(bing/sogou/quark/360search)均 <3s 返回,5s 上限不影响。
+outgoing:
+  request_timeout: 5.0
+  max_request_timeout: 5.0
+
+
 
 
 server:
