@@ -23,6 +23,11 @@
 
 优先在内网 1Panel 测试机(装有 1Panel v2 与真实 `1panel-network`,地址与凭据见本地 `LOCAL_NOTES.md`,该文件已被 git 排除、勿提交)。本机 Mac 的 Docker Desktop 不稳定,勿依赖。远端测试完必须 `docker compose down --remove-orphans` 并删除临时目录。
 
+生产服务器(见 LOCAL_NOTES.md)更新已装应用时的铁律:
+- **绝不修改/覆盖安装目录的 `.env`**——里面有用户配置的鉴权密钥(CRW_AUTH__API_KEYS)等参数,破坏即服务中断;只改需要变更的文件(如 compose 镜像行、searxng-settings.yml)
+- 改完安装目录后,必须同步更新 `/opt/1panel/resource/apps/local/<app>/` 源目录,否则面板侧安装源仍是旧版
+- 更新后必须回归验证鉴权:无密钥应 401、带密钥应 200
+
 ## 提交约定
 
 - 提交信息中文,格式 `feat:/fix:(x-app): 描述`,直接推 `origin localApps`。
