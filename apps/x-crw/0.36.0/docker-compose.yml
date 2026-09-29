@@ -48,9 +48,12 @@ services:
     labels:
       createdBy: "Apps"
 
-  # /v1/search 的元搜索后端(仅容器网络内可达,不发布端口)
+  # /v1/search 的元搜索后端(仅容器网络内可达,不发布端口)。
+  # 版本说明:锁定日期 tag 而非 latest,但需随谷歌等引擎改版及时升级——
+  # 2026.5.9 版的 google 引擎解析器自 2026 年中起静默失效(0 结果、无报错),
+  # 2026.9.29 已修复。
   crw-searxng:
-    image: searxng/searxng:2026.5.9-0cba32c15
+    image: searxng/searxng:2026.9.29-4e2c1ea7f
     restart: always
     networks:
       - 1panel-network
