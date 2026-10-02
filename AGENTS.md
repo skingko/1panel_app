@@ -7,6 +7,7 @@
 - **绝不修改上游已有文件**(apps/ 下非 `x-` 前缀的应用、README、.github/ 等);扩展只新增文件,否则每日自动同步(`sync-upstream.yml`)会产生合并冲突。
 - 扩展应用 key 一律 `x-` 前缀;新增基础设施只放 `scripts/`、`EXTENSIONS.md`、`AGENTS.md`、`.github/workflows/sync-upstream.yml` 这些上游不存在的路径。
 - 同步用 `scripts/sync-upstream.sh`;判断"上游是否有更新"比较的是 upstream tip 与 merge-base(不是 HEAD 与 merge-base,HEAD 含自己的扩展提交)。
+- **GITHUB_TOKEN 永远无法推送 `.github/workflows/` 变更**(GitHub 硬限制;`permissions` 也不支持 `workflows` 作用域,加了会让工作流解析失败)。因此同步流程会**丢弃上游的工作流变更**(折叠进合并提交)——镜像仓库本就禁用上游 renovate 工作流,这是预期行为;`sync-upstream.yml` 自身的修改只能由人工用 PAT 从本地推送。
 
 ## 1Panel v2 应用包规范(踩过的坑,勿再犯)
 
