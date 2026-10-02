@@ -12,6 +12,10 @@ concurrency:
 permissions:
   contents: write
   actions: write
+  # 上游偶尔修改 .github/workflows/*;GITHUB_TOKEN(GitHub App 令牌)推送
+  # 含工作流文件变更的提交必须有 workflows 权限,否则 remote rejected:
+  # "refusing to allow a GitHub App to create or update workflow ... without workflows permission"
+  workflows: write
 
 jobs:
   sync:
