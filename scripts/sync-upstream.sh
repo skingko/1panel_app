@@ -41,11 +41,29 @@ if [ "${TIP}" = "${BASE}" ]; then
 fi
 
 echo "合并 upstream/${BRANCH} ..."
+PRE="$(git rev-parse HEAD)"
 if ! git merge --no-edit "${UPSTREAM_REMOTE}/${BRANCH}"; then
   echo
   echo "==> 出现冲突。上游引入了与扩展文件相同的路径。" >&2
   echo "    解决冲突后执行: git add -A && git commit && git push origin ${BRANCH}" >&2
   exit 1
+fi
+
+# 与 CI 同步逻辑保持一致:丢弃上游对 .github/workflows 的改动
+# (镜像仓库禁用上游工作流,且 GITHUB_TOKEN 无法推送工作流文件变更)
+changed="$(git diff --name-only "${PRE}" HEAD -- .github/workflows)"
+if [ -n "${changed}" ]; then
+  echo "丢弃上游工作流变更:"
+  echo "${changed}"
+  while IFS= read -r f; do
+    [ -z "${f}" ] && continue
+    if git cat-file -e "${PRE}:${f}" 2>/dev/null; then
+      git checkout "${PRE}" -- "${f}"
+    else
+      git rm -q "${f}"
+    fi
+  done <<< "${changed}"
+  git commit --amend --no-edit
 fi
 
 echo "同步完成:上游新增 $(git rev-list --count "${BASE}..${UPSTREAM_REMOTE}/${BRANCH}") 个提交。"

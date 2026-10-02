@@ -12,10 +12,6 @@ concurrency:
 permissions:
   contents: write
   actions: write
-  # 上游偶尔修改 .github/workflows/*;GITHUB_TOKEN(GitHub App 令牌)推送
-  # 含工作流文件变更的提交必须有 workflows 权限,否则 remote rejected:
-  # "refusing to allow a GitHub App to create or update workflow ... without workflows permission"
-  workflows: write
 
 jobs:
   sync:
@@ -41,11 +37,30 @@ jobs:
             echo "上游无更新。"
             exit 0
           fi
+          PRE="$(git rev-parse HEAD)"
           if ! git merge --no-edit upstream/localApps; then
             echo "::error::合并冲突,请在本仓库执行 scripts/sync-upstream.sh 手动解决"
             exit 1
           fi
           echo "上游新增提交数: $(git rev-list --count "${BASE}..upstream/localApps")"
+          # GITHUB_TOKEN 无法推送工作流文件变更(GitHub 硬限制,permissions 也不支持
+          # workflows 作用域),因此丢弃上游对 .github/workflows 的全部改动:
+          # 上游的 renovate 等工作流在本镜像仓库本就被禁用,无需跟进;本文件
+          # (sync-upstream.yml)上游不存在,不受影响。变更仅由人工用 PAT 推送。
+          changed="$(git diff --name-only "${PRE}" HEAD -- .github/workflows)"
+          if [ -n "${changed}" ]; then
+            echo "丢弃上游工作流变更:" && echo "${changed}"
+            while IFS= read -r f; do
+              [ -z "${f}" ] && continue
+              if git cat-file -e "${PRE}:${f}" 2>/dev/null; then
+                git checkout "${PRE}" -- "${f}"
+              else
+                git rm -q "${f}"
+              fi
+            done <<< "${changed}"
+            git commit --amend --no-edit -q
+            echo "已折叠进合并提交。"
+          fi
 
       - name: Push
         if: env.no_updates != 'true'
