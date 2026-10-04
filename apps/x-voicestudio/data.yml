@@ -1,0 +1,32 @@
+name: VoiceStudio
+tags:
+  - 工具
+  - AI
+title: 完全本地的 ElevenLabs 替代(GPU):语音克隆、配音、转录、有声书
+description: 全本地语音工作室——语音克隆、语音设计、视频配音、听写、转录与有声书制作,支持 646 种语言,NVIDIA GPU 加速
+additionalProperties:
+  key: x-voicestudio
+  name: VoiceStudio
+  tags:
+    - Tool
+    - AI
+  shortDescZh: 完全本地的语音克隆/配音/转录/有声书套件(646 种语言,GPU 加速)
+  shortDescEn: Fully-local ElevenLabs alternative — voice cloning, dubbing, transcription & audiobooks (GPU)
+  description:
+    en: Open-source, fully-local ElevenLabs alternative — voice cloning, voice design, video dubbing, dictation, transcription and audiobook creation in 646 languages. Runs NVIDIA GPU accelerated, no cloud, no telemetry.
+    zh: 开源且完全本地化的 ElevenLabs 替代——语音克隆、语音设计、视频配音、听写、转录与有声书制作,支持 646 种语言。NVIDIA GPU 加速,无需云端、不上传数据。
+    zh-Hant: 開源且完全本機化的 ElevenLabs 替代——語音克隆、語音設計、視訊配音、聽寫、轉錄與有聲書製作,支援 646 種語言。NVIDIA GPU 加速,無需雲端。
+    ja: オープンソースの完全ローカル ElevenLabs 代替 — 音声クローン、動画吹き替え、文字起こし、オーディオブック制作、646 言語対応。NVIDIA GPU 加速。
+    ko: 완전 로컬 오픈소스 ElevenLabs 대안 — 음성 클로닝, 더빙, 전사, 오디오북 제작, 646개 언어 지원. NVIDIA GPU 가속.
+    ru: Полностью локальная альтернатива ElevenLabs с открытым кодом — клонирование голоса, дубляж, транскрипция, аудиокниги, 646 языков. Ускорение NVIDIA GPU.
+    ms: Alternatif ElevenLabs sumber terbuka sepenuhnya tempatan — klon suara, alih suara, transkripsi, buku audio, 646 bahasa. Pecutan GPU NVIDIA.
+    pt-br: Alternativa open-source totalmente local ao ElevenLabs — clonagem de voz, dublagem, transcrição e audiolivros, 646 idiomas. Aceleração NVIDIA GPU.
+  type: tool
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://github.com/debpalash/VoiceStudio
+  github: https://github.com/debpalash/VoiceStudio
+  document: https://github.com/debpalash/VoiceStudio#readme
+  architectures:
+    - amd64

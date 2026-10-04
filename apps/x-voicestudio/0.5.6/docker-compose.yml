@@ -1,0 +1,46 @@
+networks:
+  1panel-network:
+    external: true
+
+services:
+  voicestudio:
+    image: ghcr.io/debpalash/voicestudio:0.5.6
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    networks:
+      - 1panel-network
+    ports:
+      - "${PANEL_APP_PORT_HTTP}:3900"
+    volumes:
+      - "${DATA_PATH}:/app/omnivoice_data"
+    environment:
+      - HF_HOME=/app/omnivoice_data/huggingface
+      # HuggingFace 门控模型需要;留空使用匿名下载
+      - HF_TOKEN=${HF_TOKEN}
+      # 模型下载源;国内网络可填 https://hf-mirror.com 加速,留空用官方源
+      - HF_ENDPOINT=${HF_ENDPOINT}
+      - OMNIVOICE_DATA_DIR=/app/omnivoice_data
+      - PYTHONPATH=/app/backend
+      - PYTHONUNBUFFERED=1
+      # 无头服务器模式:放宽仅桌面本机的来源校验(上游 Docker 部署要求)
+      - OMNIVOICE_SERVER_MODE=1
+      # 服务鉴权密钥,调用 API 时作为 Bearer 使用
+      - OMNIVOICE_API_KEY=${OMNIVOICE_API_KEY}
+      - OMNIVOICE_WORKER_PORT=7443
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:3900/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 180s
+    # NVIDIA GPU 直通(上游 GPU 模式原样写法);1Panel 注入 deploy.resources.limits
+    # 时会保留本 reservations 段,二者共存无冲突
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    labels:
+      createdBy: "Apps"

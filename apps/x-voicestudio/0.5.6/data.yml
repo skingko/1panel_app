@@ -1,0 +1,89 @@
+additionalProperties:
+  formFields:
+    - default: 13900
+      edit: true
+      envKey: PANEL_APP_PORT_HTTP
+      labelEn: Port
+      labelZh: 端口
+      label:
+        en: 'Port'
+        zh: '端口'
+        zh-Hant: '埠'
+        ja: 'ポート'
+        ko: '포트'
+        ru: 'Порт'
+        ms: 'Port'
+        pt-br: 'Porta'
+      required: true
+      rule: paramPort
+      type: number
+
+    - default: ''
+      edit: true
+      envKey: OMNIVOICE_API_KEY
+      labelEn: API key (Bearer token, auto-generated)
+      labelZh: 服务 API 密钥(自动生成,调用 API 时作 Bearer 用)
+      label:
+        en: 'API key (Bearer token, auto-generated)'
+        zh: '服务 API 密钥(自动生成,调用 API 时作 Bearer 用)'
+        zh-Hant: '服務 API 密鑰(自動生成,呼叫 API 時作 Bearer 用)'
+        ja: 'API キー(Bearer トークン、自動生成)'
+        ko: 'API 키(Bearer 토큰, 자동 생성)'
+        ru: 'API-ключ (Bearer, генерируется автоматически)'
+        ms: 'Kunci API (token Bearer, dijana automatik)'
+        pt-br: 'Chave de API (Bearer, gerada automaticamente)'
+      random: true
+      required: true
+      rule: paramComplexity
+      type: password
+
+    - default: ''
+      edit: true
+      envKey: HF_TOKEN
+      labelEn: HuggingFace token (optional, for gated models)
+      labelZh: HuggingFace 令牌(可选,下载门控模型用)
+      label:
+        en: 'HuggingFace token (optional, for gated models)'
+        zh: 'HuggingFace 令牌(可选,下载门控模型用)'
+        zh-Hant: 'HuggingFace 權杖(可選,下載門控模型用)'
+        ja: 'HuggingFace トークン(任意、ゲートモデル用)'
+        ko: 'HuggingFace 토큰(선택, 게이트 모델용)'
+        ru: 'Токен HuggingFace (опционально, для закрытых моделей)'
+        ms: 'Token HuggingFace (pilihan, untuk model gated)'
+        pt-br: 'Token HuggingFace (opcional, para modelos restritos)'
+      required: false
+      type: text
+
+    - default: ''
+      edit: true
+      envKey: HF_ENDPOINT
+      labelEn: Model download mirror (e.g. https://hf-mirror.com for CN)
+      labelZh: 模型下载镜像(国内可填 https://hf-mirror.com,留空官方源)
+      label:
+        en: 'Model download mirror (e.g. https://hf-mirror.com for CN)'
+        zh: '模型下载镜像(国内可填 https://hf-mirror.com,留空官方源)'
+        zh-Hant: '模型下載鏡像(國內可填 https://hf-mirror.com,留空官方源)'
+        ja: 'モデルダウンロードミラー(中国では https://hf-mirror.com)'
+        ko: '모델 다운로드 미러(중국은 https://hf-mirror.com)'
+        ru: 'Зеркало загрузки моделей (для КНР — https://hf-mirror.com)'
+        ms: 'Cermin muat turun model (CN: https://hf-mirror.com)'
+        pt-br: 'Espelho de download de modelos (CN: https://hf-mirror.com)'
+      required: false
+      type: text
+
+    - default: ./data/voicestudio
+      edit: true
+      envKey: DATA_PATH
+      labelEn: Data folder path (models + library, ~10GB)
+      labelZh: 数据目录(模型与音频库,约 10GB)
+      label:
+        en: 'Data folder path (models + library, ~10GB)'
+        zh: '数据目录(模型与音频库,约 10GB)'
+        zh-Hant: '資料目錄(模型與音訊庫,約 10GB)'
+        ja: 'データフォルダ(モデルとライブラリ、約 10GB)'
+        ko: '데이터 폴더(모델·라이브러리, 약 10GB)'
+        ru: 'Папка данных (модели и библиотека, ~10 ГБ)'
+        ms: 'Laluan folder data (model + pustaka, ~10GB)'
+        pt-br: 'Caminho da pasta de dados (modelos + biblioteca, ~10GB)'
+      required: true
+      type: text
