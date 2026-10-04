@@ -1,0 +1,33 @@
+name: AIHOT
+tags:
+  - 网站
+  - AI
+title: 自己找热点、自己写日报的行业热点站框架
+description: 从信源采集、AI 筛选评分、中文写作、事件聚簇到热点日报的全流程站点,支持 RSS/网页/X/公众号六类信源
+additionalProperties:
+  key: x-aihot
+  name: AIHOT
+  tags:
+    - Website
+    - AI
+  shortDescZh: AI 自动找热点、写日报的行业热点站框架(OpenAI 兼容模型)
+  shortDescEn: Self-running industry hot-topics site with AI curation and daily reports
+  description:
+    en: A website framework that finds hot topics and writes daily reports by itself. Six source types (RSS, web lists, JSON APIs, X accounts, WeChat official accounts, custom pushes), two-stage AI scoring with open prompts, event clustering and heat ranking, daily/weekly/monthly reports, plus RSS, public API, MCP and llms.txt for agents. Any OpenAI-compatible LLM works (DeepSeek, Qwen, Zhipu).
+    zh: 一个自己找热点、自己写日报的网站框架:六种信源(RSS/网页列表/JSON 接口/X 账号/微信公众号/自定义推送),AI 预筛加两次独立评分(提示词全部公开),同一事件自动聚簇、按独立来源数算热度;每天自动出日报,周报月报汇编;对 Agent 提供 RSS、公开 API、MCP 和 llms.txt。任何 OpenAI 兼容模型(DeepSeek/千问/智谱)均可驱动。
+    zh-Hant: 一個自己找熱點、自己寫日報的網站框架:六種信源,AI 預篩加兩次獨立評分,同一事件自動聚簇、按獨立來源數算熱度;每天自動出日報;對 Agent 提供 RSS、API、MCP 和 llms.txt。
+    ja: 自らホットトピックを見つけて日報を書くウェブサイトフレームワーク。6種の情報源、AI による二段階スコアリング、イベントクラスタリングとヒートランキング、日次/週次/月次レポート。OpenAI 互換モデルで動作。
+    ko: 스스로 핫토픽을 찾아 일일 보고서를 쓰는 웹사이트 프레임워크. 6종 소스, AI 2단계 스코어링, 이벤트 클러스터링과 히트 랭킹, 일/주/월간 보고서. OpenAI 호환 모델 지원.
+    ru: Каркас сайта, который сам находит горячие темы и пишет ежедневные отчёты — шесть типов источников, двухэтапный AI-скоринг, кластеризация событий, ежедневные/еженедельные/ежемесячные выпуски, RSS/API/MCP для агентов.
+    ms: Rangka laman yang mencari topik panas dan menulis laporan harian sendiri — enam jenis sumber, penilaian AI dua peringkat, kluster acara, laporan harian/mingguan/bulanan.
+    pt-br: Framework de site que encontra tópicos em alta e escreve relatórios diários — seis tipos de fontes, pontuação de IA em dois estágios, agrupamento de eventos, relatórios diários/semanais/mensais.
+  type: website
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://github.com/KKKKhazix/AIHOT
+  github: https://github.com/KKKKhazix/AIHOT
+  document: https://github.com/KKKKhazix/AIHOT#readme
+  architectures:
+    - amd64
+    - arm64

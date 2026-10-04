@@ -1,0 +1,32 @@
+networks:
+  1panel-network:
+    external: true
+
+services:
+  moli:
+    image: ghcr.io/skingko/moli:1.1.12
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    networks:
+      - 1panel-network
+    ports:
+      - "${PANEL_APP_PORT_HTTP}:9222"
+    # --layout --resource 均为按需启用:纯 DOM 操作不受影响,
+    # 截图/坐标输入/媒体资源在请求时才触发
+    command:
+      - "moli"
+      - "serve"
+      - "--host"
+      - "0.0.0.0"
+      - "--port"
+      - "9222"
+      - "--layout"
+      - "--resource"
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:9222/json/version"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    labels:
+      createdBy: "Apps"

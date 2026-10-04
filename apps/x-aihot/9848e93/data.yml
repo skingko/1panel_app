@@ -1,0 +1,211 @@
+additionalProperties:
+  formFields:
+    - default: 13100
+      edit: true
+      envKey: PANEL_APP_PORT_HTTP
+      labelEn: Port
+      labelZh: 端口
+      label:
+        en: 'Port'
+        zh: '端口'
+        zh-Hant: '埠'
+        ja: 'ポート'
+        ko: '포트'
+        ru: 'Порт'
+        ms: 'Port'
+        pt-br: 'Porta'
+      required: true
+      rule: paramPort
+      type: number
+
+    - default: ''
+      edit: true
+      envKey: SITE_URL
+      labelEn: Site URL (e.g. http://192.168.1.10:13100)
+      labelZh: 网站对外地址(生成链接/RSS/MCP 都用它)
+      label:
+        en: 'Site URL (used by links, RSS and MCP)'
+        zh: '网站对外地址(生成链接/RSS/MCP 都用它)'
+        zh-Hant: '網站對外位址(產生連結/RSS/MCP 都用它)'
+        ja: 'サイトURL(リンク・RSS・MCP で使用)'
+        ko: '사이트 URL(링크·RSS·MCP에 사용)'
+        ru: 'Внешний URL сайта (для ссылок, RSS и MCP)'
+        ms: 'URL laman (untuk pautan, RSS dan MCP)'
+        pt-br: 'URL do site (usado por links, RSS e MCP)'
+      required: true
+      type: text
+
+    - default: ''
+      edit: true
+      envKey: ADMIN_PASSWORD
+      labelEn: Admin password (min 12 chars, for /admin)
+      labelZh: 管理员密码(至少 12 位,登录 /admin 用)
+      label:
+        en: 'Admin password (min 12 chars, for /admin)'
+        zh: '管理员密码(至少 12 位,登录 /admin 用)'
+        zh-Hant: '管理員密碼(至少 12 位,登入 /admin 用)'
+        ja: '管理者パスワード(12 文字以上、/admin 用)'
+        ko: '관리자 비밀번호(12자 이상, /admin 로그인)'
+        ru: 'Пароль администратора (от 12 символов, для /admin)'
+        ms: 'Kata laluan admin (min 12 aksara, untuk /admin)'
+        pt-br: 'Senha do admin (mín. 12 caracteres, para /admin)'
+      required: true
+      type: text
+
+    - default: ''
+      edit: true
+      envKey: LLM_BASE_URL
+      labelEn: LLM API base URL (OpenAI-compatible)
+      labelZh: 模型接口地址(OpenAI 兼容,如 DeepSeek/千问/智谱)
+      label:
+        en: 'LLM API base URL (OpenAI-compatible)'
+        zh: '模型接口地址(OpenAI 兼容,如 DeepSeek/千问/智谱)'
+        zh-Hant: '模型介面位址(OpenAI 相容,如 DeepSeek/千問/智譜)'
+        ja: 'LLM API ベースURL(OpenAI 互換)'
+        ko: 'LLM API 베이스 URL(OpenAI 호환)'
+        ru: 'Базовый URL LLM (OpenAI-совместимый)'
+        ms: 'URL asas API LLM (serasi OpenAI)'
+        pt-br: 'URL base da API LLM (compatível com OpenAI)'
+      required: true
+      type: text
+
+    - default: ''
+      edit: true
+      envKey: LLM_API_KEY
+      labelEn: LLM API key
+      labelZh: 模型 API 密钥
+      label:
+        en: 'LLM API key'
+        zh: '模型 API 密钥'
+        zh-Hant: '模型 API 密鑰'
+        ja: 'LLM API キー'
+        ko: 'LLM API 키'
+        ru: 'API-ключ LLM'
+        ms: 'Kunci API LLM'
+        pt-br: 'Chave de API do LLM'
+      required: true
+      type: text
+
+    - default: deepseek-chat
+      edit: true
+      envKey: LLM_MODEL
+      labelEn: LLM model (e.g. deepseek-chat, qwen-flash, glm-4-flash)
+      labelZh: 模型名称(如 deepseek-chat、qwen-flash、glm-4-flash)
+      label:
+        en: 'LLM model (e.g. deepseek-chat, qwen-flash, glm-4-flash)'
+        zh: '模型名称(如 deepseek-chat、qwen-flash、glm-4-flash)'
+        zh-Hant: '模型名稱(如 deepseek-chat、qwen-flash、glm-4-flash)'
+        ja: 'LLM モデル(例:deepseek-chat、qwen-flash)'
+        ko: 'LLM 모델(예: deepseek-chat, qwen-flash)'
+        ru: 'Модель LLM (например, deepseek-chat, qwen-flash)'
+        ms: 'Model LLM (cth. deepseek-chat, qwen-flash)'
+        pt-br: 'Modelo LLM (ex.: deepseek-chat, qwen-flash)'
+      required: true
+      type: text
+
+    - default: ''
+      edit: true
+      envKey: SESSION_SECRET
+      labelEn: Session signing secret (openssl rand -hex 32)
+      labelZh: 会话签名密钥(随机字符,建议修改)
+      label:
+        en: 'Session signing secret (openssl rand -hex 32)'
+        zh: '会话签名密钥(随机字符,建议修改)'
+        zh-Hant: '會話簽名密鑰(隨機字元,建議修改)'
+        ja: 'セッション署名キー(変更推奨)'
+        ko: '세션 서명 키(변경 권장)'
+        ru: 'Секрет подписи сессий (рекомендуется изменить)'
+        ms: 'Kunci tandatangan sesi (disyorkan diubah)'
+        pt-br: 'Segredo de assinatura de sessão (recomendado alterar)'
+      required: false
+      type: text
+
+    - default: ''
+      edit: true
+      envKey: IMG_PROXY_SIGN_SECRET
+      labelEn: Image proxy signing secret (openssl rand -hex 32)
+      labelZh: 图片代理签名密钥(随机字符,建议修改)
+      label:
+        en: 'Image proxy signing secret (openssl rand -hex 32)'
+        zh: '图片代理签名密钥(随机字符,建议修改)'
+        zh-Hant: '圖片代理簽名密鑰(隨機字元,建議修改)'
+        ja: '画像プロキシ署名キー(変更推奨)'
+        ko: '이미지 프록시 서명 키(변경 권장)'
+        ru: 'Секрет подписи image-proxy (рекомендуется изменить)'
+        ms: 'Kunci tandatangan proksi imej (disyorkan diubah)'
+        pt-br: 'Segredo de assinatura do proxy de imagens (recomendado alterar)'
+      required: false
+      type: text
+
+    - default: ''
+      edit: true
+      envKey: POSTGRES_PASSWORD
+      labelEn: Database password (internal only, random string)
+      labelZh: 数据库密码(仅容器网络内部使用,随机字符)
+      label:
+        en: 'Database password (internal only, random string)'
+        zh: '数据库密码(仅容器网络内部使用,随机字符)'
+        zh-Hant: '資料庫密碼(僅容器網路內部使用,隨機字元)'
+        ja: 'データベースパスワード(内部のみ、ランダム文字列)'
+        ko: '데이터베이스 비밀번호(내부 전용, 랜덤 문자열)'
+        ru: 'Пароль БД (только внутри сети контейнеров)'
+        ms: 'Kata laluan pangkalan data (dalaman sahaja)'
+        pt-br: 'Senha do banco (somente interno, string aleatória)'
+      required: false
+      type: text
+
+    - default: false
+      edit: true
+      envKey: TRUST_PROXY
+      labelEn: Trust reverse proxy (X-Forwarded-* headers)
+      labelZh: 信任反向代理(X-Forwarded-* 头,反代后开启)
+      label:
+        en: 'Trust reverse proxy (X-Forwarded-* headers)'
+        zh: '信任反向代理(X-Forwarded-* 头,反代后开启)'
+        zh-Hant: '信任反向代理(X-Forwarded-* 標頭)'
+        ja: 'リバースプロキシを信頼(X-Forwarded-* ヘッダー)'
+        ko: '리버스 프록시 신뢰(X-Forwarded-* 헤더)'
+        ru: 'Доверять обратному прокси (заголовки X-Forwarded-*)'
+        ms: 'Percayai proksi songsang (pengepala X-Forwarded-*)'
+        pt-br: 'Confiar no proxy reverso (cabeçalhos X-Forwarded-*)'
+      required: true
+      type: select
+      values:
+        - label: 直连
+          value: 'false'
+        - label: 反代
+          value: 'true'
+
+    - default: ./data/app
+      edit: true
+      envKey: DATA_PATH
+      labelEn: App data folder path
+      labelZh: 应用数据目录
+      label:
+        en: 'App data folder path'
+        zh: '应用数据目录'
+        zh-Hant: '應用資料目錄'
+        ja: 'アプリデータフォルダ'
+        ko: '앱 데이터 폴더'
+        ru: 'Папка данных приложения'
+        ms: 'Laluan folder data aplikasi'
+        pt-br: 'Caminho da pasta de dados do app'
+      required: true
+      type: text
+
+    - default: ./data/postgres
+      edit: true
+      envKey: DB_DATA_PATH
+      labelEn: Database folder path
+      labelZh: 数据库数据目录
+      label:
+        en: 'Database folder path'
+        zh: '数据库数据目录'
+        zh-Hant: '資料庫資料目錄'
+        ja: 'データベースフォルダ'
+        ko: '데이터베이스 폴더'
+        ru: 'Папка данных БД'
+        ms: 'Laluan folder pangkalan data'
+        pt-br: 'Caminho da pasta do banco de dados'
+      required: true
+      type: text

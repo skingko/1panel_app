@@ -1,0 +1,111 @@
+networks:
+  1panel-network:
+    external: true
+
+x-backend-env: &backend-env
+  NODE_ENV: production
+  DATABASE_URL: postgres://aihot:${POSTGRES_PASSWORD}@aihot-db:5432/aihot
+  AIHOT_DATA_DIR: /data
+  API_BASE_URL: http://aihot-api:3001
+  LOCAL_ROUTER_URL: http://aihot-web:3000
+  INGEST_RATE_LIMIT: "10"
+  SITE_URL: ${SITE_URL}
+  ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+  SESSION_SECRET: ${SESSION_SECRET}
+  IMG_PROXY_SIGN_SECRET: ${IMG_PROXY_SIGN_SECRET}
+  LLM_BASE_URL: ${LLM_BASE_URL}
+  LLM_API_KEY: ${LLM_API_KEY}
+  LLM_MODEL: ${LLM_MODEL}
+
+services:
+  aihot-db:
+    image: postgres:17-alpine
+    restart: always
+    networks:
+      - 1panel-network
+    environment:
+      POSTGRES_USER: aihot
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: aihot
+    volumes:
+      - "${DB_DATA_PATH}:/var/lib/postgresql/data"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aihot -d aihot"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    labels:
+      createdBy: "Apps"
+
+  # 一次性任务:执行数据库迁移并写入演示信源,完成后自动退出
+  aihot-setup:
+    image: ghcr.io/skingko/aihot:9848e93
+    restart: "no"
+    networks:
+      - 1panel-network
+    environment: *backend-env
+    volumes:
+      - "${DATA_PATH}:/data"
+    command: ["sh", "-c", "node scripts/migrate.ts && node scripts/seed.ts"]
+    depends_on:
+      aihot-db:
+        condition: service_healthy
+    labels:
+      createdBy: "Apps"
+
+  aihot-api:
+    image: ghcr.io/skingko/aihot:9848e93
+    restart: always
+    networks:
+      - 1panel-network
+    environment:
+      <<: *backend-env
+      API_HOST: 0.0.0.0
+      API_PORT: "3001"
+    volumes:
+      - "${DATA_PATH}:/data"
+    command: ["node", "apps/api/src/main.ts"]
+    depends_on:
+      aihot-setup:
+        condition: service_completed_successfully
+    labels:
+      createdBy: "Apps"
+
+  # 停止宽限期:让进行中的付费模型调用收尾,避免"结果未知"的账单重付
+  aihot-worker:
+    image: ghcr.io/skingko/aihot:9848e93
+    restart: always
+    networks:
+      - 1panel-network
+    environment: *backend-env
+    volumes:
+      - "${DATA_PATH}:/data"
+    command: ["node", "apps/worker/src/main.ts"]
+    stop_grace_period: 210s
+    depends_on:
+      aihot-setup:
+        condition: service_completed_successfully
+    labels:
+      createdBy: "Apps"
+
+  aihot-web:
+    image: ghcr.io/skingko/aihot:9848e93
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    networks:
+      - 1panel-network
+    ports:
+      - "${PANEL_APP_PORT_HTTP}:3000"
+    environment:
+      NODE_ENV: production
+      API_BASE_URL: http://aihot-api:3001
+      SITE_URL: ${SITE_URL}
+      TRUST_PROXY: ${TRUST_PROXY}
+      WEB_HOST: 0.0.0.0
+      WEB_PORT: "3000"
+    command: ["node", "apps/web/server.ts"]
+    depends_on:
+      aihot-api:
+        condition: service_started
+    labels:
+      createdBy: "Apps"

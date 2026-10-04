@@ -1,0 +1,33 @@
+name: Moli
+tags:
+  - 工具
+  - AI
+title: 面向 AI Agent 的无头浏览器(Rust 编写,CDP/WebDriver 三协议)
+description: 生产级无头浏览器:结构优先、按需渲染,单二进制低资源占用,CDP/WebDriver Classic/BiDi 三协议合一,Playwright 可直连
+additionalProperties:
+  key: x-moli
+  name: Moli
+  tags:
+    - Tool
+    - AI
+  shortDescZh: 面向 AI Agent 的 Rust 无头浏览器,CDP/WebDriver 三协议合一
+  shortDescEn: Headless browser for AI agents in Rust, CDP + WebDriver Classic/BiDi
+  description:
+    en: Production-ready headless browser for AI agents. Structure-first with on-demand layout and rendering, single binary with light footprint. One endpoint serves CDP, WebDriver Classic and WebDriver BiDi; Playwright connects over CDP directly. Fetch pages as markdown/semantic tree, screenshots and PDF on demand.
+    zh: 面向 AI Agent 的生产级无头浏览器。结构优先、按需排版渲染,单二进制、资源占用低;同一端点提供 CDP、WebDriver Classic、WebDriver BiDi 三种协议,Playwright 可经 CDP 直连;支持输出 Markdown/语义树、按需截图与 PDF。
+    zh-Hant: 面向 AI Agent 的生產級無頭瀏覽器。結構優先、按需排版渲染,單一二進制、資源佔用低;同一端點提供 CDP、WebDriver Classic、WebDriver BiDi 三種協議,Playwright 可經 CDP 直連。
+    ja: AI エージェント向けのプロダクション対応ヘッドレスブラウザ。構造優先・オンデマンドレンダリング、単一バイナリで低リソース。CDP・WebDriver Classic・BiDi の 3 プロトコルを同一エンドポイントで提供。
+    ko: AI 에이전트용 프로덕션급 헤드리스 브라우저. 구조 우선·온디맨드 렌더링, 단일 바이너리 저사양. CDP·WebDriver Classic·BiDi 3개 프로토콜을 하나의 엔드포인트로 제공.
+    ru: Продуктовый headless-браузер для AI-агентов — структура в приоритете, рендеринг по требованию, один бинарник. CDP, WebDriver Classic и BiDi на одном эндпоинте.
+    ms: Pelayar headless tahap pengeluaran untuk ejen AI — struktur dahulu, penghantaran atas permintaan, satu binari. CDP, WebDriver Classic dan BiDi pada satu endpoint.
+    pt-br: Navegador headless pronto para produção para agentes de IA — estrutura primeiro, renderização sob demanda, binário único. CDP, WebDriver Classic e BiDi no mesmo endpoint.
+  type: tool
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://github.com/lexmount/moli
+  github: https://github.com/lexmount/moli
+  document: https://github.com/lexmount/moli#readme
+  architectures:
+    - amd64
+    - arm64
