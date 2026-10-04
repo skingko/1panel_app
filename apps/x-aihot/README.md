@@ -14,7 +14,8 @@
 | aihot-api | 后端 API(容器网络内部) |
 | aihot-worker | 精选/写作/聚簇流水线 |
 | aihot-setup | 一次性迁移与演示信源导入,完成即退出 |
-| aihot-db | PostgreSQL 17 |
+
+**数据库复用 1Panel 已安装的 PostgreSQL 服务**:安装面板会列出已有的 PostgreSQL 服务供选择,并自动创建随机的库名/用户/密码,不再单独起数据库容器(需先在应用商店安装 PostgreSQL;上游按 PostgreSQL 17 开发,建议 15+)。
 
 上游未发布 Docker 镜像,镜像由本仓库的 `Build Upstream Images` 工作流用上游官方 Dockerfile 构建(`ghcr.io/skingko/aihot`,tag 为上游 commit 短 SHA)。
 

@@ -4,7 +4,8 @@ networks:
 
 x-backend-env: &backend-env
   NODE_ENV: production
-  DATABASE_URL: postgres://aihot:${POSTGRES_PASSWORD}@aihot-db:5432/aihot
+  # 复用 1Panel 已安装的 PostgreSQL 服务:安装面板自动创建随机库/用户/密码
+  DATABASE_URL: postgres://${PANEL_DB_USER}:${PANEL_DB_USER_PASSWORD}@${PANEL_DB_HOST}:${PANEL_DB_PORT}/${PANEL_DB_NAME}
   AIHOT_DATA_DIR: /data
   API_BASE_URL: http://aihot-api:3001
   LOCAL_ROUTER_URL: http://aihot-web:3000
@@ -18,25 +19,6 @@ x-backend-env: &backend-env
   LLM_MODEL: ${LLM_MODEL}
 
 services:
-  aihot-db:
-    image: postgres:17-alpine
-    restart: always
-    networks:
-      - 1panel-network
-    environment:
-      POSTGRES_USER: aihot
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: aihot
-    volumes:
-      - "${DB_DATA_PATH}:/var/lib/postgresql/data"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U aihot -d aihot"]
-      interval: 5s
-      timeout: 5s
-      retries: 30
-    labels:
-      createdBy: "Apps"
-
   # 一次性任务:执行数据库迁移并写入演示信源,完成后自动退出
   aihot-setup:
     image: ghcr.io/skingko/aihot:9848e93
@@ -47,9 +29,6 @@ services:
     volumes:
       - "${DATA_PATH}:/data"
     command: ["sh", "-c", "node scripts/migrate.ts && node scripts/seed.ts"]
-    depends_on:
-      aihot-db:
-        condition: service_healthy
     labels:
       createdBy: "Apps"
 

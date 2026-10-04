@@ -17,7 +17,8 @@
    资源限制交由安装面板「高级设置 → 资源限制」。可用且不冲突的加固:`read_only`、`tmpfs`、`cap_drop`、`security_opt`、`healthcheck`、`depends_on`。
 2. compose 固定:`networks: {1panel-network: {external: true}}`、主服务 `container_name: ${CONTAINER_NAME}`、`labels: {createdBy: "Apps"}`;sidecar 用应用前缀服务名(如 `<app>-db`),不发布宿主端口。
 3. 版本级 `data.yml` 的 `formFields[].envKey` 必须与 compose 引用的 `${VAR}`、`.env.sample` 三方闭环;select 字段用 `values: [{label, value}]`。
-4. **发布前必须穷举验证**:对每个服务分别模拟 1Panel 注入(deploy.resources.limits + ports 前缀 `${HOST_IP}:` + .env 追加 `CPUS=0/MEMORY_LIMIT=0/HOST_IP=127.0.0.1`),`docker compose config` 全部通过。随机注入意味着只测一个服务不够(x-crw 曾因此返工两次)。
+4. **需要数据库的应用一律复用 1Panel 已装数据库服务,不自带 db 容器**。标准模式(参考 `apps/keila`):formFields 声明 `PANEL_DB_TYPE`(`type: apps` + `values` + `child{envKey: PANEL_DB_HOST, type: service}`)、`PANEL_DB_PORT`(number/paramPort)、`PANEL_DB_NAME`/`PANEL_DB_USER`(`random: true`/paramCommon)、`PANEL_DB_USER_PASSWORD`(`type: password`/`random: true`/paramComplexity);compose 里连 `postgres://${PANEL_DB_USER}:${PANEL_DB_USER_PASSWORD}@${PANEL_DB_HOST}:${PANEL_DB_PORT}/${PANEL_DB_NAME}`。`PANEL_DB_TYPE` 仅供面板选择器使用,compose 不引用(闭环校验需豁免)。
+5. **发布前必须穷举验证**:对每个服务分别模拟 1Panel 注入(deploy.resources.limits + ports 前缀 `${HOST_IP}:` + .env 追加 `CPUS=0/MEMORY_LIMIT=0/HOST_IP=127.0.0.1`),`docker compose config` 全部通过。随机注入意味着只测一个服务不够(x-crw 曾因此返工两次)。
 5. 面向大陆环境的应用:涉及 SearXNG 时需在自带 settings.yml 启用 bing 引擎(默认引擎集在大陆全部超时)。
 
 ## 测试环境
