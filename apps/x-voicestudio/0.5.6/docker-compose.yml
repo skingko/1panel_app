@@ -33,6 +33,18 @@ services:
       timeout: 10s
       retries: 3
       start_period: 180s
+    # 首次启动预置 prefs.json:默认关闭不可见水印。
+    # 水印模型(audioseal)经 urllib 直连 huggingface.co 下载,不走 HF_ENDPOINT
+    # 镜像,国内网络每次合成都要空耗 ~160s 重试;偏好存在数据卷的 prefs.json,
+    # 关闭后不再触发下载,需要时在应用设置里重新打开即可。
+    entrypoint:
+      - "sh"
+      - "-c"
+      - >
+        if [ ! -f /app/omnivoice_data/prefs.json ]; then
+          printf '{"watermark.invisible": false}\n' > /app/omnivoice_data/prefs.json;
+        fi;
+        exec python3 -m uvicorn backend.main:app --host 0.0.0.0 --port 3900
     # NVIDIA GPU 直通(上游 GPU 模式原样写法);1Panel 注入 deploy.resources.limits
     # 时会保留本 reservations 段,二者共存无冲突
     deploy:

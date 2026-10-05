@@ -31,6 +31,7 @@
 ## 说明
 
 - 仅 amd64(上游未发布 arm64 镜像)
+- **不可见水印默认关闭**:水印模型经 urllib 直连 huggingface.co 下载(不走 HF_ENDPOINT 镜像),国内网络下每次合成会空耗约 160 秒重试,故首次启动预置 `prefs.json` 关闭它。需要水印时在应用「设置」中打开,并手动下载一次模型(网络可达即可)
 - 7443 worker 控制端口默认不发布(仅分布式 worker 场景需要,见[上游 compose](https://github.com/debpalash/VoiceStudio/blob/main/deploy/docker-compose.yml))
 - 公网暴露建议再套反向代理;局域网内已有 API key 鉴权
 - AMD 显卡(ROCm)需改用 `:stable-rocm` 镜像并替换设备直通写法(`/dev/kfd`、`/dev/dri`),参考上游 compose 的 rocm 服务
