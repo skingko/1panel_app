@@ -2,8 +2,8 @@ networks:
   1panel-network:
     external: true
 services:
-  flycast:
-    image: "linuxserver/flycast:2.7.20260927"
+  helium:
+    image: "linuxserver/helium:0.18.3"
     container_name: ${CONTAINER_NAME}
     restart: always
     networks:
@@ -17,9 +17,10 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=${TIME_ZONE}
+      - HELIUM_CLI=${HELIUM_CLI:-https://www.linuxserver.io/}
       - CUSTOM_USER=${CUSTOM_USER}
       - PASSWORD=${PASSWORD}
-      - TITLE=${TITLE:-Flycast}
+      - TITLE=${TITLE:-Helium}
       - SELKIES_UI_TITLE=${SELKIES_UI_TITLE:-Selkies}
       - DASHBOARD=${DASHBOARD:-selkies-dashboard}
       - LC_ALL=${LC_ALL}
