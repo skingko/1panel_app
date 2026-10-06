@@ -1,0 +1,21 @@
+networks:
+  1panel-network:
+    external: true
+
+services:
+  toonflow:
+    image: ghcr.io/skingko/toonflow:72a895c
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    init: true
+    networks:
+      - 1panel-network
+    ports:
+      - "${PANEL_APP_PORT_HTTP}:3000"
+    environment:
+      - NODE_ENV=production
+      - TOONFLOW_DATA_DIR=/app/data
+    volumes:
+      - "${DATA_PATH}:/app/data"
+    labels:
+      createdBy: "Apps"

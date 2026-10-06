@@ -1,0 +1,36 @@
+additionalProperties:
+  formFields:
+    - default: 13200
+      edit: true
+      envKey: PANEL_APP_PORT_HTTP
+      labelEn: Port
+      labelZh: 端口
+      label:
+        en: 'Port'
+        zh: '端口'
+        zh-Hant: '埠'
+        ja: 'ポート'
+        ko: '포트'
+        ru: 'Порт'
+        ms: 'Port'
+        pt-br: 'Porta'
+      required: true
+      rule: paramPort
+      type: number
+
+    - default: ./data/toonflow
+      edit: true
+      envKey: DATA_PATH
+      labelEn: Data folder path (projects, config, plugins)
+      labelZh: 数据目录(项目/配置/插件,含内嵌数据库)
+      label:
+        en: 'Data folder path (projects, config, plugins)'
+        zh: '数据目录(项目/配置/插件,含内嵌数据库)'
+        zh-Hant: '資料目錄(專案/設定/外掛,含內嵌資料庫)'
+        ja: 'データフォルダ(プロジェクト・設定・プラグイン)'
+        ko: '데이터 폴더(프로젝트·설정·플러그인)'
+        ru: 'Папка данных (проекты, настройки, плагины)'
+        ms: 'Laluan folder data (projek, konfigurasi, plugin)'
+        pt-br: 'Caminho da pasta de dados (projetos, configuração, plugins)'
+      required: true
+      type: text

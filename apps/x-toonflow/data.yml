@@ -1,0 +1,33 @@
+name: Toonflow
+tags:
+  - 设计
+  - AI
+title: 开源 AI 创作平台:无限画布、AI Agent 与可视化工作流
+description: 融合无限画布、AI Agent 与可视化工作流的 AI 创作平台,支持图像/视频生成、智能分镜与短剧创作,模型自由接入
+additionalProperties:
+  key: x-toonflow
+  name: Toonflow
+  tags:
+    - Design
+    - AI
+  shortDescZh: 开源 AI 创作平台:无限画布 + AI Agent + 可视化工作流
+  shortDescEn: Open-source AI creative platform — infinite canvas, AI agents, visual workflows
+  description:
+    en: Open-source AI creative platform combining an infinite canvas, AI agents and visual workflows — image generation, video generation, smart storyboarding and short-film creation. Self-hosted, bring your own model APIs, extensible via MCP and plugins. Data stays in your data folder (embedded database, no external DB required).
+    zh: 开源 AI 创作平台,融合无限画布、AI Agent 与可视化工作流——图像生成、视频生成、智能分镜与短剧创作。本地部署、自由接入各家模型 API,可通过 MCP 与插件扩展。数据保存在自己的数据目录(内嵌数据库,无需外部数据库服务)。
+    zh-Hant: 開源 AI 創作平台,融合無限畫布、AI Agent 與可視化工作流——影像生成、影片生成、智慧分鏡與短劇創作。本地部署、自由接入模型,可透過 MCP 與外掛擴展。
+    ja: オープンソースの AI 創作プラットフォーム — 無限キャンバス、AI エージェント、ビジュアルワークフローで画像・動画生成、スマート絵コンテ、ショートドラマ制作。
+    ko: 오픈소스 AI 창작 플랫폼 — 무한 캔버스, AI 에이전트, 비주얼 워크플로로 이미지·영상 생성, 스마트 스토리보드, 숏드라마 제작.
+    ru: Открытая платформа AI-творчества — бесконечный холст, AI-агенты и визуальные рабочие процессы для генерации изображений и видео, раскадровки и создания короткометражек.
+    ms: Platform kreatif AI sumber terbuka — kanvas tak terhad, ejen AI dan aliran kerja visual untuk penjanaan imej/video dan papan cerita.
+    pt-br: Plataforma criativa de IA open-source — canvas infinito, agentes de IA e fluxos visuais para geração de imagens/vídeos e storyboards.
+  type: website
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://github.com/HBAI-Ltd/Toonflow-app
+  github: https://github.com/HBAI-Ltd/Toonflow-app
+  document: https://github.com/HBAI-Ltd/Toonflow-app#readme
+  architectures:
+    - amd64
+    - arm64
