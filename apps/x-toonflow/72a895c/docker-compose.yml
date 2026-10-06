@@ -17,5 +17,18 @@ services:
       - TOONFLOW_DATA_DIR=/app/data
     volumes:
       - "${DATA_PATH}:/app/data"
+    # 镜像以 bun(uid 1000)运行,而 bind 挂载的数据目录由 root 创建,
+    # 直接启动会因无写权限崩溃(EACCES settings.json)。以 root 进入,
+    # 首次启动把数据目录属主修正为 bun 后降权执行,兼顾安全与可用。
+    user: "0:0"
+    entrypoint:
+      - "sh"
+      - "-c"
+      - >
+        if [ "$(stat -c %u /app/data)" != "1000" ]; then
+          chown -R 1000:1000 /app/data;
+        fi;
+        exec setpriv --reuid=1000 --regid=1000 --init-groups
+        bun build/server/index.js
     labels:
       createdBy: "Apps"
