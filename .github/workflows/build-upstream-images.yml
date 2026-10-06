@@ -127,6 +127,39 @@ jobs:
           else:
               print("polyfill already present")
           PYEOF
+      - name: Patch chat workspace links (agent file links hardened to [已拦截])
+        run: |
+          python3 - <<'PYEOF'
+          # Agent 生成文件后在聊天里输出 [文本](<assets/generated/x.mp4>) 这类工作区
+          # 相对链接;vue-stream-markdown 的加固对不带 / ./ 前缀的裸相对路径解析失败,
+          # 整个链接被替换为 [已拦截]。在渲染前把这类链接重写为可直接访问的
+          # /api/workspaces/files/read 绝对地址(该接口实测可无鉴权读取工作区文件)。
+          p = "apps/web/src/components/messageMarkdown.vue"
+          s = open(p, encoding="utf-8").read()
+          old_content = ':content="chunk"'
+          new_content = ':content="resolveWorkspaceLinks(chunk)"'
+          anchor = 'const shikiOptions: ShikiOptions = { theme: ["github-light", "github-dark"] };'
+          inject = anchor + '''
+          const workspaceLinkPattern = /\\]\\((<)?((?!\\/|\\.\\.?\\/|[a-z][a-z0-9+.-]*:|#)[^)\\s<>]+?)(>)?\\)/gi;
+          function resolveWorkspaceLinks(value: string) {
+            if (!directory) return value;
+            return value.replace(workspaceLinkPattern, (_match, _lt: string, path: string) => {
+              try {
+                const url = new URL("/api/workspaces/files/read", location.origin);
+                url.searchParams.set("directory", directory!);
+                url.searchParams.set("path", decodeURIComponent(path));
+                return `](${url.href})`;
+              } catch { return _match; }
+            });
+          }'''
+          if "resolveWorkspaceLinks" not in s:
+              assert old_content in s and anchor in s, "messageMarkdown.vue 结构与补丁预期不符"
+              s = s.replace(anchor, inject).replace(old_content, new_content)
+              open(p, "w", encoding="utf-8").write(s)
+              print("workspace link resolver patched into messageMarkdown.vue")
+          else:
+              print("already patched")
+          PYEOF
       - name: Resolve short SHA
         id: sha
         run: echo "short=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
