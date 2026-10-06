@@ -73,7 +73,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh api "repos/${GITHUB_REPOSITORY}/actions/workflows?per_page=100" --paginate \
-            | jq -r '.workflows[] | select(.name != "Sync Upstream") | .id' \
+            | jq -r '.workflows[] | select(.name != "Sync Upstream" and .name != "Build Upstream Images") | .id' \
             | sort -u \
             | while read -r id; do
                 [ -z "$id" ] && continue
