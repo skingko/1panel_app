@@ -1,0 +1,36 @@
+additionalProperties:
+  formFields:
+    - default: 13878
+      edit: true
+      envKey: PANEL_APP_PORT_HTTP
+      labelEn: Port
+      labelZh: 端口
+      label:
+        en: 'Port'
+        zh: '端口'
+        zh-Hant: '埠'
+        ja: 'ポート'
+        ko: '포트'
+        ru: 'Порт'
+        ms: 'Port'
+        pt-br: 'Porta'
+      required: true
+      rule: paramPort
+      type: number
+
+    - default: ''
+      edit: true
+      envKey: GPROXY_MASTER_KEY
+      labelEn: Master key (base64, 32 bytes; keep it unchanged)
+      labelZh: 主密钥(44 位 base64,建议自行更换,设置后勿改)
+      label:
+        en: 'Master key (base64, 32 bytes; keep it unchanged)'
+        zh: '主密钥(44 位 base64,建议自行更换,设置后勿改)'
+        zh-Hant: '主密鑰(44 位 base64,建議自行更換,設定後勿改)'
+        ja: 'マスターキー(base64・32バイト、変更不可)'
+        ko: '마스터 키(base64, 32바이트, 변경 금지)'
+        ru: 'Мастер-ключ (base64, 32 байта, не менять)'
+        ms: 'Kunci induk (base64, 32 bait, jangan diubah)'
+        pt-br: 'Chave mestra (base64, 32 bytes, não altere)'
+      required: true
+      type: password

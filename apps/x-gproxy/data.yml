@@ -1,0 +1,33 @@
+name: GProxy
+tags:
+  - 工具
+  - AI
+title: Rust 自托管 LLM API 网关(OpenAI/Claude/Gemini 统一接入)
+description: 多渠道 LLM 代理网关:统一暴露 OpenAI/Claude/Gemini 风格 API,内置管理台、用户与密钥管理、请求与用量审计
+additionalProperties:
+  key: x-gproxy
+  name: GProxy
+  tags:
+    - Tool
+    - AI
+  shortDescZh: Rust 多渠道 LLM 网关:OpenAI/Claude/Gemini 统一接入 + 管理台
+  shortDescEn: Rust multi-channel LLM proxy gateway with admin console, key management and usage auditing
+  description:
+    en: Self-hosted LLM API gateway in Rust. Expose OpenAI, Claude and Gemini-style APIs through one unified gateway with a built-in admin console, user/key management, request and usage auditing, credential failover and model routing. SQLite by default — no external database required.
+    zh: Rust 编写的自托管 LLM API 网关:把 OpenAI、Claude、Gemini 风格的 API 统一到一个网关暴露,内置管理台、用户与密钥管理、请求与用量审计,支持凭据故障转移与模型路由。默认使用内嵌 SQLite,无需外部数据库。
+    zh-Hant: Rust 編寫的自託管 LLM API 閘道:把 OpenAI、Claude、Gemini 風格的 API 統一到一個閘道,內建管理台、使用者與金鑰管理、請求與用量稽核。
+    ja: Rust 製のセルフホスト LLM API ゲートウェイ — OpenAI/Claude/Gemini スタイルの API を統一ゲートウェイで公開、管理コンソールと利用監査を内蔵。
+    ko: Rust 기반 셀프 호스팅 LLM API 게이트웨이 — OpenAI/Claude/Gemini 스타일 API를 하나의 게이트웨이로 통합, 관리 콘솔·키 관리·사용량 감사 내장.
+    ru: Самохостинг LLM API-шлюз на Rust — единый доступ в стилях OpenAI/Claude/Gemini, консоль управления, ключи и аудит использования.
+    ms: Get LLM API gerbang self-hosted dalam Rust — API gaya OpenAI/Claude/Gemini melalui satu gerbang dengan konsol pentadbiran dan audit penggunaan.
+    pt-br: Gateway de API LLM self-hosted em Rust — APIs estilo OpenAI/Claude/Gemini em um gateway único com console admin e auditoria de uso.
+  type: tool
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://github.com/LeenHawk/gproxy
+  github: https://github.com/LeenHawk/gproxy
+  document: https://gproxy.leenhawk.com/
+  architectures:
+    - amd64
+    - arm64
