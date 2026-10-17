@@ -18,14 +18,14 @@ additionalProperties:
       rule: paramPort
       type: number
 
-    - default: ''
+    - default: 'dbjCaIhpjuWrtlh3M6AtNDuYJ/rNqOvSPHZeeyKLF5E='
       edit: true
       envKey: GPROXY_MASTER_KEY
       labelEn: Master key (base64, 32 bytes; keep it unchanged)
-      labelZh: 主密钥(44 位 base64,建议自行更换,设置后勿改)
+      labelZh: 主密钥(44 位 base64,已预置,可换成 openssl rand -base64 32,设置后勿改)
       label:
         en: 'Master key (base64, 32 bytes; keep it unchanged)'
-        zh: '主密钥(44 位 base64,建议自行更换,设置后勿改)'
+        zh: '主密钥(44 位 base64,已预置,可换成 openssl rand -base64 32,设置后勿改)'
         zh-Hant: '主密鑰(44 位 base64,建議自行更換,設定後勿改)'
         ja: 'マスターキー(base64・32バイト、変更不可)'
         ko: '마스터 키(base64, 32바이트, 변경 금지)'
