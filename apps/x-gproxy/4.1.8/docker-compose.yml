@@ -1,0 +1,25 @@
+networks:
+  1panel-network:
+    external: true
+
+services:
+  gproxy:
+    image: ghcr.io/leenhawk/gproxy:v4.1.8
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    networks:
+      - 1panel-network
+    ports:
+      - "${PANEL_APP_PORT_HTTP}:8787"
+    environment:
+      # 加密上游凭据的主密钥:配置后务必保持不变,否则已存凭据无法解密
+      - GPROXY_MASTER_KEY=${GPROXY_MASTER_KEY}
+    # 发布镜像为 distroless(无 shell、非 root uid 65532),无法在入口修正
+    # bind 目录属主;改用命名卷——首次挂载时自动继承镜像内 /app/data 的属主
+    volumes:
+      - gproxy-data:/app/data
+    labels:
+      createdBy: "Apps"
+
+volumes:
+  gproxy-data: {}
