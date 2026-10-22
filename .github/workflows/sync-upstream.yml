@@ -38,6 +38,9 @@ jobs:
             exit 0
           fi
           PRE="$(git rev-parse HEAD)"
+          # README.md 由本仓库自管理(.gitattributes: merge=ours),启用驱动
+          # 让上游 README 变更在合并时保留本地版本,避免冲突
+          git config merge.ours.driver true
           if ! git merge --no-edit upstream/localApps; then
             echo "::error::合并冲突,请在本仓库执行 scripts/sync-upstream.sh 手动解决"
             exit 1
