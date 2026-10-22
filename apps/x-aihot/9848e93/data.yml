@@ -103,39 +103,39 @@ additionalProperties:
       required: true
       type: text
 
-    - default: ''
-      edit: true
+    - edit: true
       envKey: SESSION_SECRET
-      labelEn: Session signing secret (openssl rand -hex 32)
-      labelZh: 会话签名密钥(随机字符,建议修改)
+      labelEn: Session signing secret (auto-generated)
+      labelZh: 会话签名密钥(安装时自动生成,设置后勿改)
       label:
-        en: 'Session signing secret (openssl rand -hex 32)'
-        zh: '会话签名密钥(随机字符,建议修改)'
-        zh-Hant: '會話簽名密鑰(隨機字元,建議修改)'
-        ja: 'セッション署名キー(変更推奨)'
-        ko: '세션 서명 키(변경 권장)'
-        ru: 'Секрет подписи сессий (рекомендуется изменить)'
-        ms: 'Kunci tandatangan sesi (disyorkan diubah)'
-        pt-br: 'Segredo de assinatura de sessão (recomendado alterar)'
-      required: false
-      type: text
+        en: 'Session signing secret (auto-generated)'
+        zh: '会话签名密钥(安装时自动生成,设置后勿改)'
+        zh-Hant: '會話簽名密鑰(安裝時自動生成,設定後勿改)'
+        ja: 'セッション署名キー(インストール時に自動生成,変更不可)'
+        ko: '세션 서명 키(설치 시 자동 생성, 변경 금지)'
+        ru: 'Секрет подписи сессий (генерируется автоматически, не менять)'
+        ms: 'Kunci tandatangan sesi (jana automatik, jangan diubah)'
+        pt-br: 'Segredo de assinatura de sessão (gerado automaticamente, não altere)'
+      random: true
+      required: true
+      type: password
 
-    - default: ''
-      edit: true
+    - edit: true
       envKey: IMG_PROXY_SIGN_SECRET
-      labelEn: Image proxy signing secret (openssl rand -hex 32)
-      labelZh: 图片代理签名密钥(随机字符,建议修改)
+      labelEn: Image proxy signing secret (auto-generated)
+      labelZh: 图片代理签名密钥(安装时自动生成,设置后勿改)
       label:
-        en: 'Image proxy signing secret (openssl rand -hex 32)'
-        zh: '图片代理签名密钥(随机字符,建议修改)'
-        zh-Hant: '圖片代理簽名密鑰(隨機字元,建議修改)'
-        ja: '画像プロキシ署名キー(変更推奨)'
-        ko: '이미지 프록시 서명 키(변경 권장)'
-        ru: 'Секрет подписи image-proxy (рекомендуется изменить)'
-        ms: 'Kunci tandatangan proksi imej (disyorkan diubah)'
-        pt-br: 'Segredo de assinatura do proxy de imagens (recomendado alterar)'
-      required: false
-      type: text
+        en: 'Image proxy signing secret (auto-generated)'
+        zh: '图片代理签名密钥(安装时自动生成,设置后勿改)'
+        zh-Hant: '圖片代理簽名密鑰(安裝時自動生成,設定後勿改)'
+        ja: '画像プロキシ署名キー(インストール時に自動生成,変更不可)'
+        ko: '이미지 프록시 서명 키(설치 시 자동 생성, 변경 금지)'
+        ru: 'Секрет подписи image-proxy (генерируется автоматически, не менять)'
+        ms: 'Kunci tandatangan proksi imej (jana automatik, jangan diubah)'
+        pt-br: 'Segredo de assinatura do proxy de imagens (gerado automaticamente, não altere)'
+      random: true
+      required: true
+      type: password
 
     - default: postgresql
       envKey: PANEL_DB_TYPE
