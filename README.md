@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/afdian-logo.png" alt="Docker Apps 项目标识" width="640">
+  本仓库镜像自 <a href="https://github.com/okxlin/appstore">okxlin/appstore</a>（<code>localApps</code> 分支）并每日自动同步，同时自维护一批 <code>x-</code> 前缀的扩展应用，见下方<a href="#扩展应用清单">扩展应用清单</a>。
 </p>
 
 <p align="center">
@@ -13,17 +13,23 @@
   <a href="README-en.md"><img src="https://img.shields.io/badge/English-D9D9D9?style=flat-square" alt="Read in English"></a>
 </p>
 
-## 支持项目
+## 联系方式
 
 <p align="center">
-  <a href="https://afdian.com/a/dockerapps"><strong>爱发电赞助：用爱发电</strong></a><br><br>
-  <strong>微信赞赏</strong><br>
-  <img src="docs/wechat-reward.webp" alt="微信赞赏码" width="200">
+  邮箱：<a href="mailto:sking@woocoo.app"><strong>sking@woocoo.app</strong></a><br><br>
+  微信：<strong>skingko</strong>
 </p>
+
+## 致谢上游
+
+本仓库的主体内容与每日更新来自 [okxlin/appstore](https://github.com/okxlin/appstore)，感谢原作者及所有贡献者的持续维护。扩展应用清单中的各个应用，其软件本体与 Docker 镜像分别来自各自的上游项目作者，本仓库仅做 1Panel 应用打包适配，版权与许可归属上游项目。扩展应用的具体维护机制见 [EXTENSIONS.md](EXTENSIONS.md)。
 
 <details>
 <summary><strong>目录</strong></summary>
 
+- [联系方式](#联系方式)
+- [致谢上游](#致谢上游)
+- [扩展应用清单](#扩展应用清单)
 - [免责声明](#免责声明)
   - [1. 镜像容器适配](#1-镜像容器适配)
   - [2. 法律遵守](#2-法律遵守)
@@ -39,6 +45,21 @@
 - [5. 应用一览图](#5-应用一览图)
 
 </details>
+
+***
+
+## 扩展应用清单
+
+以下 `x-` 前缀应用由本仓库自行打包维护，不来自上游（各应用详情见其目录内 README）：
+
+| 应用 | 版本 | 简介 |
+| --- | --- | --- |
+| [x-gproxy](apps/x-gproxy) | 4.1.8 | 多渠道 LLM 代理网关：把 OpenAI / Claude / Gemini 等上游统一到一个端点，三种风格 API 对外暴露，内置管理台、密钥管理、用量审计与故障转移，内嵌 SQLite 免外部数据库 |
+| [x-crw](apps/x-crw) | 0.36.0 | 自托管网页抓取 / 爬取 / 搜索 API（Firecrawl / Tavily 替代品），内置 SearXNG 搜索后端与 JS 渲染，并提供 MCP 服务器供 AI Agent 调用 |
+| [x-toonflow](apps/x-toonflow) | 72a895c | AI 创作平台：无限画布 + AI Agent + 可视化工作流，支持图像 / 视频生成、智能分镜与短剧创作，模型 API 网页端自由接入 |
+| [x-voicestudio](apps/x-voicestudio) | 0.5.6 | 完全本地的语音工作室（ElevenLabs 替代品）：语音克隆、语音设计、视频配音、听写、转录与有声书制作，支持 646 种语言，NVIDIA GPU 加速 |
+| [x-moli](apps/x-moli) | 1.1.12 | 面向 AI Agent 的生产级无头浏览器：结构优先按需渲染，单二进制低资源占用，CDP / WebDriver Classic / BiDi 三协议同端口，Playwright 可直连 |
+| [x-aihot](apps/x-aihot) | 9848e93 | 行业热点站：从 RSS / 网页 / X / 公众号等信源采集，大模型两轮评分筛选、中文改写、事件聚簇，每日自动生成热点日报 |
 
 ***
 
@@ -118,7 +139,7 @@ if [ ! -d "$LOCAL_APPS_DIR" ]; then
   exit 1
 fi
 
-git clone -b localApps https://github.com/okxlin/appstore "$IMPORT_DIR"
+git clone -b localApps https://github.com/skingko/1panel_app "$IMPORT_DIR"
 
 cp -a "$IMPORT_DIR/apps/." "$LOCAL_APPS_DIR/"
 
@@ -160,7 +181,7 @@ if [ ! -d "$LOCAL_APPS_DIR" ]; then
   exit 1
 fi
 
-wget -O "$ARCHIVE_PATH" https://github.com/okxlin/appstore/archive/refs/heads/localApps.zip
+wget -O "$ARCHIVE_PATH" https://github.com/skingko/1panel_app/archive/refs/heads/localApps.zip
 
 unzip -o "$ARCHIVE_PATH" -d "$LOCAL_APPS_DIR"
 
@@ -203,3 +224,6 @@ cat ./data/hbbs/id_ed25519.pub
 ## 5. 应用一览图
 
 ![](https://github.com/okxlin/appstore/raw/localApps/docs/app-list.png)
+
+> [!NOTE]
+> 上图来自上游 okxlin/appstore，未包含本仓库新增的 `x-` 前缀扩展应用，扩展应用见[扩展应用清单](#扩展应用清单)。

@@ -1,0 +1,4 @@
+# README.md 由本仓库自管理(联系方式/致谢/扩展应用清单),
+# 上游 okxlin/appstore 的 README 变更不合并进来,始终保留本地版本。
+# 依赖 scripts/sync-upstream.sh 中设置的 merge.ours.driver。
+README.md merge=ours

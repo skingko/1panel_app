@@ -41,6 +41,9 @@ if [ "${TIP}" = "${BASE}" ]; then
 fi
 
 echo "合并 upstream/${BRANCH} ..."
+# README.md 由本仓库自管理(.gitattributes: merge=ours),启用驱动使其生效,
+# 避免上游 README 变更与本地改写产生合并冲突
+git config merge.ours.driver true
 PRE="$(git rev-parse HEAD)"
 if ! git merge --no-edit "${UPSTREAM_REMOTE}/${BRANCH}"; then
   echo
