@@ -10,6 +10,9 @@ x-backend-env: &backend-env
   API_BASE_URL: http://aihot-api:3001
   LOCAL_ROUTER_URL: http://aihot-web:3000
   INGEST_RATE_LIMIT: "10"
+  # 上游 .env.example 默认即为 true;不开启则 worker 不注册采集与模型调用任务,站点永远无内容
+  COLLECT_ENABLED: "true"
+  MODEL_CALLS_ENABLED: "true"
   SITE_URL: ${SITE_URL}
   ADMIN_PASSWORD: ${ADMIN_PASSWORD}
   SESSION_SECRET: ${SESSION_SECRET}
