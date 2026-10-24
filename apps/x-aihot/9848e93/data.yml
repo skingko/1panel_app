@@ -103,6 +103,23 @@ additionalProperties:
       required: true
       type: text
 
+    - default: ''
+      edit: true
+      envKey: LLM_EXTRA_JSON
+      labelEn: 'Extra model request params (JSON, optional; e.g. {"thinking":{"type":"disabled"}} for GLM)'
+      labelZh: '模型额外请求参数(可选 JSON;GLM 思考型模型填 {"thinking":{"type":"disabled"}} 关闭思考,否则输出超预算会解析失败)'
+      label:
+        en: 'Extra model request params (JSON, optional; e.g. {"thinking":{"type":"disabled"}} for GLM)'
+        zh: '模型额外请求参数(可选 JSON;GLM 思考型模型填 {"thinking":{"type":"disabled"}} 关闭思考,否则输出超预算会解析失败)'
+        zh-Hant: '模型額外請求參數(可選 JSON;GLM 思考型模型填 {"thinking":{"type":"disabled"}} 關閉思考)'
+        ja: 'モデル追加リクエストパラメータ(任意 JSON;GLM 思考型モデルでは {"thinking":{"type":"disabled"}})'
+        ko: '모델 추가 요청 파라미터(선택 JSON; GLM 추론 모델은 {"thinking":{"type":"disabled"}})'
+        ru: 'Дополнительные параметры запроса модели (JSON, опционально; для GLM: {"thinking":{"type":"disabled"}})'
+        ms: 'Parameter permintaan model tambahan (JSON, pilihan; GLM: {"thinking":{"type":"disabled"}})'
+        pt-br: 'Parâmetros extras de requisição do modelo (JSON, opcional; GLM: {"thinking":{"type":"disabled"}})'
+      required: false
+      type: text
+
     - edit: true
       envKey: SESSION_SECRET
       labelEn: Session signing secret (auto-generated)

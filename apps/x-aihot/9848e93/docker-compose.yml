@@ -20,6 +20,9 @@ x-backend-env: &backend-env
   LLM_BASE_URL: ${LLM_BASE_URL}
   LLM_API_KEY: ${LLM_API_KEY}
   LLM_MODEL: ${LLM_MODEL}
+  # 可选:模型额外请求参数(JSON);GLM 思考型模型建议 {"thinking":{"type":"disabled"}},
+  # 否则思考耗尽 token 预算、content 为空,应用报 "No JSON object in model output"
+  LLM_EXTRA_JSON: ${LLM_EXTRA_JSON}
 
 services:
   # 一次性任务:执行数据库迁移并写入演示信源,完成后自动退出
