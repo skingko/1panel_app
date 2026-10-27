@@ -59,7 +59,7 @@ services:
       createdBy: "Apps"
 
   firecrawl-playwright:
-    image: "ghcr.io/firecrawl/playwright-service@sha256:df1a393ce8bfc3801570a826a9b0dcc400ae48789adb4a0ad9d6cbf0229b059b"
+    image: "ghcr.io/firecrawl/playwright-service@sha256:c9789ffbf5571eb5b8456891ae688bdee095a6f9662e0bed50d9e86eb022bd6f"
     container_name: ${CONTAINER_NAME}-playwright
     restart: always
     networks:
@@ -85,7 +85,7 @@ services:
       createdBy: "Apps"
 
   firecrawl-redis:
-    image: "redis:alpine@sha256:becdda6c7f4b3fb42e42fd7f120bbf5c54c4caaaf16f26da24e4563d2c1f0576"
+    image: "redis:alpine@sha256:615b4cedaff0c1437a1548acae4222572df8c021eeb7382d64cb8b5e3a13ac7a"
     container_name: ${CONTAINER_NAME}-redis
     restart: always
     networks:
