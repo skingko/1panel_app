@@ -42,8 +42,26 @@ jobs:
           # 让上游 README 变更在合并时保留本地版本,避免冲突
           git config merge.ours.driver true
           if ! git merge --no-edit upstream/localApps; then
-            echo "::error::合并冲突,请在本仓库执行 scripts/sync-upstream.sh 手动解决"
-            exit 1
+            # 同步策略本就丢弃上游对 .github/workflows 的全部改动,因此该目录下的
+            # 冲突(含"本地删除 vs 上游修改"的 renovate.yml 这类)可直接按合并前
+            # 状态自动解决;只有其他路径冲突才需要人工处理。
+            bad="$(git diff --name-only --diff-filter=U | grep -v '^\.github/workflows/' || true)"
+            if [ -n "${bad}" ]; then
+              echo "::error::合并冲突(非工作流文件),请在本仓库执行 scripts/sync-upstream.sh 手动解决: ${bad}"
+              exit 1
+            fi
+            echo "工作流文件冲突,按本地策略自动解决:"
+            git diff --name-only --diff-filter=U
+            while IFS= read -r f; do
+              [ -z "${f}" ] && continue
+              if git cat-file -e "${PRE}:${f}" 2>/dev/null; then
+                git checkout "${PRE}" -- "${f}"
+              else
+                git rm -q "${f}"
+              fi
+            done <<< "$(git diff --name-only --diff-filter=U)"
+            git commit --no-edit -q
+            echo "已按合并前状态解决。"
           fi
           echo "上游新增提交数: $(git rev-list --count "${BASE}..upstream/localApps")"
           # GITHUB_TOKEN 无法推送工作流文件变更(GitHub 硬限制,permissions 也不支持

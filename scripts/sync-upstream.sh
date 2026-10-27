@@ -46,10 +46,27 @@ echo "合并 upstream/${BRANCH} ..."
 git config merge.ours.driver true
 PRE="$(git rev-parse HEAD)"
 if ! git merge --no-edit "${UPSTREAM_REMOTE}/${BRANCH}"; then
-  echo
-  echo "==> 出现冲突。上游引入了与扩展文件相同的路径。" >&2
-  echo "    解决冲突后执行: git add -A && git commit && git push origin ${BRANCH}" >&2
-  exit 1
+  # 同步策略本就丢弃上游对 .github/workflows 的全部改动,该目录下的冲突
+  # (含"本地删除 vs 上游修改")直接按合并前状态自动解决;其他路径才需人工。
+  bad="$(git diff --name-only --diff-filter=U | grep -v '^\.github/workflows/' || true)"
+  if [ -n "${bad}" ]; then
+    echo
+    echo "==> 冲突(非工作流文件): ${bad}" >&2
+    echo "    解决冲突后执行: git add -A && git commit && git push origin ${BRANCH}" >&2
+    exit 1
+  fi
+  echo "工作流文件冲突,按本地策略自动解决:"
+  git diff --name-only --diff-filter=U
+  while IFS= read -r f; do
+    [ -z "${f}" ] && continue
+    if git cat-file -e "${PRE}:${f}" 2>/dev/null; then
+      git checkout "${PRE}" -- "${f}"
+    else
+      git rm -q "${f}"
+    fi
+  done <<< "$(git diff --name-only --diff-filter=U)"
+  git commit --no-edit
+  echo "已按合并前状态解决。"
 fi
 
 # 与 CI 同步逻辑保持一致:丢弃上游对 .github/workflows 的改动
