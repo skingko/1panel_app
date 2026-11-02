@@ -15,9 +15,10 @@ x-ap-env: &ap-env
   AP_POSTGRES_DATABASE: ${PANEL_DB_NAME}
   AP_POSTGRES_USERNAME: ${PANEL_DB_USER}
   AP_POSTGRES_PASSWORD: ${PANEL_DB_USER_PASSWORD}
-  AP_REDIS_HOST: activepieces-redis
-  AP_REDIS_PORT: "6379"
-  AP_REDIS_PASSWORD: ${AP_REDIS_PASSWORD}
+  # 复用 1Panel 已安装的 Redis 作为作业队列(安装时选择服务并填其密码)
+  AP_REDIS_HOST: ${AP_REDIS_HOST}
+  AP_REDIS_PORT: ${AP_REDIS_PORT}
+  AP_REDIS_PASSWORD: ${PANEL_REDIS_ROOT_PASSWORD}
   AP_EXECUTION_MODE: UNSANDBOXED
   AP_TELEMETRY_ENABLED: ${AP_TELEMETRY_ENABLED}
 
@@ -35,9 +36,6 @@ services:
     environment: *ap-env
     volumes:
       - activepieces-cache:/usr/src/app/cache
-    depends_on:
-      activepieces-redis:
-        condition: service_started
     healthcheck:
       test:
         - CMD
@@ -51,23 +49,5 @@ services:
     labels:
       createdBy: "Apps"
 
-  # 作业队列 sidecar:仅容器网络可达,随机密码;官方 pin 7.x,取当前 7.4 小版本
-  activepieces-redis:
-    image: redis:7.4-alpine
-    restart: always
-    networks:
-      - 1panel-network
-    command:
-      - redis-server
-      - --requirepass
-      - ${AP_REDIS_PASSWORD}
-      - --appendonly
-      - "yes"
-    volumes:
-      - activepieces-redis-data:/data
-    labels:
-      createdBy: "Apps"
-
 volumes:
   activepieces-cache: {}
-  activepieces-redis-data: {}

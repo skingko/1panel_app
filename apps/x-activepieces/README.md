@@ -12,8 +12,9 @@
 
 ## 说明
 
-- **复用 1Panel 已安装的 PostgreSQL**(安装时面板自动创建随机库/用户/密码);官方镜像自带 pgvector 支持知识库向量检索,复用面板 PostgreSQL 时该扩展不可用——核心自动化功能完全不受影响,仅"知识库"功能需自行加装 pgvector
-- 作业队列使用内置 Redis sidecar(随机密码,仅容器网络可达),数据在命名卷 `activepieces-redis-data`
+- **复用 1Panel 已安装的 PostgreSQL 与 Redis**:PostgreSQL 安装时面板自动创建随机库/用户/密码;Redis 在安装表单里选择已装服务并填写其密码(1Panel 安装 Redis 时设置的那个)
+- 官方镜像自带 pgvector 支持知识库向量检索,复用面板 PostgreSQL 时该扩展不可用——核心自动化功能完全不受影响,仅"知识库"功能需自行加装 pgvector
+- Activepieces 的队列固定使用 Redis 0 号库且不支持切换;若与其他共库应用出现键冲突,可为它单独再装一个 Redis 实例
 - 采用官方镜像入口的 `WORKER_AND_APP` 单容器模式:API/UI 与流程执行器同容器运行,并自动生成 worker token,适合单机部署;代码步骤为非沙箱模式(UNSANDBOXED),请只运行可信流程
 - 升级:应用商店「升级」换新镜像,数据库迁移自动执行;流程数据都在 PostgreSQL 中,升级不丢失
 - 遥测默认关闭(可在参数或管理界面修改)

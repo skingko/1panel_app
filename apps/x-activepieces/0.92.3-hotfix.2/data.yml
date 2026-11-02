@@ -69,20 +69,56 @@ additionalProperties:
       required: true
       type: password
 
-    - edit: true
-      envKey: AP_REDIS_PASSWORD
-      labelEn: Redis password (auto-generated)
-      labelZh: Redis 密码(安装时自动生成,设置后勿改)
+    - default: ''
+      edit: true
+      envKey: AP_REDIS_HOST
+      key: redis
+      labelEn: Redis Service
+      labelZh: Redis 服务(复用 1Panel 已安装的 Redis)
       label:
-        en: 'Redis password (auto-generated)'
-        zh: 'Redis 密码(安装时自动生成,设置后勿改)'
-        zh-Hant: 'Redis 密碼(安裝時自動生成,設定後勿改)'
-        ja: 'Redis パスワード(インストール時に自動生成)'
-        ko: 'Redis 비밀번호(설치 시 자동 생성)'
-        ru: 'Пароль Redis (генерируется автоматически)'
-        ms: 'Kata laluan Redis (jana automatik)'
-        pt-br: 'Senha do Redis (gerada automaticamente)'
-      random: true
+        en: 'Redis Service (reuse the Redis installed in 1Panel)'
+        zh: 'Redis 服务(复用 1Panel 已安装的 Redis)'
+        zh-Hant: 'Redis 服務(複用 1Panel 已安裝的 Redis)'
+        ja: 'Redis サービス(1Panel 已導入の Redis を再利用)'
+        ko: 'Redis 서비스(1Panel에 설치된 Redis 재사용)'
+        ru: 'Сервис Redis (использует установленный в 1Panel Redis)'
+        ms: 'Perkhidmatan Redis (guna semula Redis 1Panel)'
+        pt-br: 'Serviço Redis (reutiliza o Redis instalado no 1Panel)'
+      required: true
+      type: service
+
+    - default: 6379
+      edit: true
+      envKey: AP_REDIS_PORT
+      labelEn: Redis Service Port
+      labelZh: Redis 服务端口
+      label:
+        en: 'Redis Service Port'
+        zh: 'Redis 服务端口'
+        zh-Hant: 'Redis 服務埠'
+        ja: 'Redis サービスポート'
+        ko: 'Redis 서비스 포트'
+        ru: 'Порт сервиса Redis'
+        ms: 'Port perkhidmatan Redis'
+        pt-br: 'Porta do serviço Redis'
+      required: true
+      rule: paramPort
+      type: number
+
+    - default: ''
+      edit: true
+      envKey: PANEL_REDIS_ROOT_PASSWORD
+      labelEn: 'Redis Password (the password set when installing Redis in 1Panel)'
+      labelZh: 'Redis 密码(1Panel 安装 Redis 时设置的那个密码)'
+      label:
+        en: 'Redis Password (the password set when installing Redis in 1Panel)'
+        zh: 'Redis 密码(1Panel 安装 Redis 时设置的那个密码)'
+        zh-Hant: 'Redis 密碼(1Panel 安裝 Redis 時設置的那個密碼)'
+        ja: 'Redis パスワード(1Panel に Redis をインストールした際に設定したもの)'
+        ko: 'Redis 비밀번호(1Panel에 Redis 설치 시 설정한 값)'
+        ru: 'Пароль Redis (заданный при установке Redis в 1Panel)'
+        ms: 'Kata laluan Redis (yang ditetapkan semasa memasang Redis di 1Panel)'
+        pt-br: 'Senha do Redis (a definida ao instalar o Redis no 1Panel)'
       required: true
       type: password
 
