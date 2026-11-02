@@ -1,0 +1,33 @@
+name: Activepieces
+tags:
+  - 工具
+  - 自动化
+title: '开源自动化工作流平台(Zapier/n8n 替代)'
+description: '开源无代码自动化平台:400+ 应用连接器、可视化流程编排、代码步骤、定时/手动/Webhook 触发,复用 1Panel 已装 PostgreSQL'
+additionalProperties:
+  key: x-activepieces
+  name: Activepieces
+  tags:
+    - Tool
+    - Automation
+  shortDescZh: '开源自动化工作流平台,400+ 应用连接器,可视化编排'
+  shortDescEn: 'Open-source no-code automation with 400+ integrations and visual flow builder'
+  description:
+    en: 'Open-source no-code automation platform (Zapier alternative). Build flows visually with 400+ piece connectors, code steps, and schedule/webhook/manual triggers. Reuses the PostgreSQL already installed in 1Panel and ships an internal Redis for the job queue.'
+    zh: '开源无代码自动化平台(Zapier 替代品):可视化编排自动化流程,内置 400+ 应用连接器,支持代码步骤、定时/手动/Webhook 触发,流程执行历史与连接凭据管理。复用 1Panel 已安装的 PostgreSQL,队列用内置 Redis。'
+    zh-Hant: '開源無代碼自動化平台(Zapier 替代品):視覺化編排自動化流程,內建 400+ 應用連接器,支援程式碼步驟、定時/手動/Webhook 觸發。複用 1Panel 已安裝的 PostgreSQL。'
+    ja: 'オープンソースのノーコード自動化プラットフォーム(Zapier 代替)。400 以上のコネクタ、コードステップ、スケジュール/Webhook トリガーを提供。'
+    ko: '오픈소스 노코드 자동화 플랫폼(Zapier 대안). 400개 이상의 커넥터와 코드 스텝, 스케줄/Webhook 트리거 지원.'
+    ru: 'Открытая платформа автоматизации без кода (альтернатива Zapier): 400+ коннекторов, шаги с кодом, триггеры по расписанию и webhook.'
+    ms: 'Platform automasi tanpa kod sumber terbuka (alternatif Zapier) dengan 400+ penyambung dan pencetus jadual/webhook.'
+    pt-br: 'Plataforma de automação no-code de código aberto (alternativa ao Zapier) com 400+ conectores e gatilhos de agenda/webhook.'
+  type: tool
+  crossVersionUpdate: true
+  limit: 0
+  recommend: 0
+  website: https://www.activepieces.com/
+  github: https://github.com/activepieces/activepieces
+  document: https://www.activepieces.com/docs/install
+  architectures:
+    - amd64
+    - arm64
