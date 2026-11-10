@@ -55,7 +55,7 @@
 | 应用 | 版本 | 简介 |
 | --- | --- | --- |
 | [x-activepieces](apps/x-activepieces) | 0.92.3-hotfix.2 | 开源自动化工作流平台（Zapier 替代）：可视化编排流程，400+ 应用连接器、代码步骤、定时/手动/Webhook 触发，复用 1Panel 已装 PostgreSQL |
-| [x-gproxy](apps/x-gproxy) | 4.1.8 | 多渠道 LLM 代理网关：把 OpenAI / Claude / Gemini 等上游统一到一个端点，三种风格 API 对外暴露，内置管理台、密钥管理、用量审计与故障转移，内嵌 SQLite 免外部数据库 |
+| [x-gproxy](apps/x-gproxy) | 4.2.3 | 多渠道 LLM 代理网关：把 OpenAI / Claude / Gemini 等上游统一到一个端点，三种风格 API 对外暴露，内置管理台、密钥管理、用量审计与故障转移，内嵌 SQLite 免外部数据库 |
 | [x-crw](apps/x-crw) | 0.36.0 | 自托管网页抓取 / 爬取 / 搜索 API（Firecrawl / Tavily 替代品），内置 SearXNG 搜索后端与 JS 渲染，并提供 MCP 服务器供 AI Agent 调用 |
 | [x-toonflow](apps/x-toonflow) | 72a895c | AI 创作平台：无限画布 + AI Agent + 可视化工作流，支持图像 / 视频生成、智能分镜与短剧创作，模型 API 网页端自由接入 |
 | [x-voicestudio](apps/x-voicestudio) | 0.5.6 | 完全本地的语音工作室（ElevenLabs 替代品）：语音克隆、语音设计、视频配音、听写、转录与有声书制作，支持 646 种语言，NVIDIA GPU 加速 |
