@@ -1,6 +1,6 @@
 services:
   firecrawl:
-    image: "ghcr.io/firecrawl/firecrawl:latest@sha256:b16ea873b82f20f938d1c53c6111fe1ad8452a23875e9a5324b4b249e9bfd31d"
+    image: "ghcr.io/firecrawl/firecrawl:latest@sha256:ecab55fbfb450f909bcd9061ef3c22dc2135a61923b888f48339acbb3356c331"
     container_name: ${CONTAINER_NAME}
     restart: always
     networks:
@@ -85,7 +85,7 @@ services:
       createdBy: "Apps"
 
   firecrawl-redis:
-    image: "redis:alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3"
+    image: "redis:alpine@sha256:5af80107c1eeecb484a2269b80a26d12bfa6521787da4663bd9f19f60a163483"
     container_name: ${CONTAINER_NAME}-redis
     restart: always
     networks:
