@@ -1,6 +1,6 @@
 services:
   firecrawl:
-    image: "ghcr.io/firecrawl/firecrawl:latest@sha256:ecab55fbfb450f909bcd9061ef3c22dc2135a61923b888f48339acbb3356c331"
+    image: "ghcr.io/firecrawl/firecrawl:2.11.864"
     container_name: ${CONTAINER_NAME}
     restart: always
     networks:
@@ -103,7 +103,7 @@ services:
       createdBy: "Apps"
 
   firecrawl-rabbitmq:
-    image: "rabbitmq:4-management@sha256:61f90c401a5b5ed2486771973ea92ad66046471eacab9c9149f1a6e091c91677"
+    image: "rabbitmq:4.4.1-management"
     container_name: ${CONTAINER_NAME}-rabbitmq
     restart: always
     networks:
