@@ -1,0 +1,21 @@
+networks:
+  1panel-network:
+    external: true
+services:
+  pairdrop:
+    image: "linuxserver/pairdrop:1.11.3"
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    networks:
+      - 1panel-network
+    ports:
+      - "${PANEL_APP_PORT_HTTP}:3000"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TIME_ZONE}
+      - RATE_LIMIT=${RATE_LIMIT:-false}
+      - WS_FALLBACK=${WS_FALLBACK:-false}
+      - RTC_CONFIG=${RTC_CONFIG:-}
+    labels:
+      createdBy: "Apps"
